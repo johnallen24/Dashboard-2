@@ -56,6 +56,8 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .battery
         view.backgroundColor = UIColor.white
+        view.layer.cornerRadius = 25
+        view.layer.masksToBounds = true
         return view
     }()
     
@@ -64,15 +66,18 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .voltage
         view.backgroundColor = UIColor.white
+        view.layer.cornerRadius = 25
+        view.layer.masksToBounds = true
         return view
     }()
     
     let graphView3: GraphView = {
         let view = GraphView()
         view.translatesAutoresizingMaskIntoConstraints = false
-         view.graphName = .battery
+        view.graphName = .battery
         view.backgroundColor = UIColor.white
-        
+        view.layer.cornerRadius = 25
+        view.layer.masksToBounds = true
         return view
     }()
     
@@ -81,7 +86,8 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .voltage
         view.backgroundColor = UIColor.white
-        
+        view.layer.cornerRadius = 25
+        view.layer.masksToBounds = true
         return view
     }()
     
@@ -114,7 +120,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    view.backgroundColor = colorWithHexString(hexString: "f0f0f0") //f0f0f0
+    view.backgroundColor = colorWithHexString(hexString: "4d4b4e") //f0f0f0
         //view.setGradientBackground(colorOne: colorWithHexString(hexString: "f0f0f0"), colorTwo: colorWithHexString(hexString: "4d4b4e"))
         setupViews()
     }
@@ -122,7 +128,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     func setupViews() {
         
-        
+       
         graphView1.alpha = 1
         topStackView = UIStackView(arrangedSubviews: [graphView1, graphView2])
         topStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -193,7 +199,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         
         oldHeight = newViewHeight
         
-        
+         //graphView1.round(corners: [UIRectCorner.bottomLeft, UIRectCorner.bottomRight], radius: 50)
         
     }
     
