@@ -10,7 +10,27 @@ import UIKit
 import Charts
 import GTProgressBar
 
-class GraphView: UIView {
+class GraphView: UIView, UIGestureRecognizerDelegate {
+    
+//    func graphWasTapped(controller: dashBoardController) {
+//        
+//        let tap2 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+//        tap2.delegate = self
+//        self.addGestureRecognizer(tap2)
+//        
+//        dcontroller = controller
+//        
+//        
+//    }
+//    
+//    var dcontroller: dashBoardController?
+//    
+////    @objc func didTapAgain() {
+////        
+////        dcontroller?.didTapAgain()
+////    }
+    
+    
     
     let chtChart: LineChartView = {
         let view = LineChartView()
@@ -34,6 +54,8 @@ class GraphView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        
         horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#fe117c")
         horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
         horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
@@ -48,6 +70,10 @@ class GraphView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
+    
     
     
     let titleLabel: UITextView = {

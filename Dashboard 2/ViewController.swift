@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate{
+class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -32,12 +32,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         //let rect = CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
     
     
-    var fullScreenView: UIStackView = {
-        let view = UIStackView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        //view.backgroundColor = UIColor.blue
-        return view
-    }()
+    
+   var fullScreenView: GraphView!
     
    var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
@@ -93,6 +89,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         return view
     }()
     
+    
+    var tap: UITapGestureRecognizer!
+
+    
+    
     var topStackView: UIStackView!
     var bottomStackView: UIStackView!
     
@@ -103,14 +104,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         effect = visualEffectView.effect
         visualEffectView.effect = nil
         
-        fullScreenView.layer.cornerRadius = 5
+        
 // NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-//
-        
-         view.backgroundColor = colorWithHexString(hexString: "f0f0f0") //f0f0f0
+    view.backgroundColor = colorWithHexString(hexString: "f0f0f0") //f0f0f0
         //view.setGradientBackground(colorOne: colorWithHexString(hexString: "f0f0f0"), colorTwo: colorWithHexString(hexString: "4d4b4e"))
+        setupViews()
+    }
+    
+    
+    func setupViews() {
         
-        
+        graphView1.alpha = 1
         topStackView = UIStackView(arrangedSubviews: [graphView1, graphView2])
         topStackView.translatesAutoresizingMaskIntoConstraints = false
         bottomStackView = UIStackView(arrangedSubviews: [graphView3, graphView4])
@@ -138,7 +142,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         //view.addSubview(middleContainer)
         view.addSubview(bottomStackView)
         
-     
+        
         
         //        NSLayoutConstraint.activate([
         //            topContainer.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0),
@@ -147,14 +151,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         //            topContainer.heightAnchor.constraint(equalToConstant: 40)
         //        ])
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
-        tap.delegate = self as! UIGestureRecognizerDelegate
+        tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
         graphView1.addGestureRecognizer(tap)
         
         
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
-        tap2.delegate = self as! UIGestureRecognizerDelegate
-        fullScreenView.addGestureRecognizer(tap2)
         
         NSLayoutConstraint.activate([
             topStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
@@ -175,55 +175,80 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate{
         NSLayoutConstraint.activate([
             bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-             bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
-             bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
-           
+            bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
+            bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
+            
             //bottomStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 40),
             
             ])
         
         oldHeight = newViewHeight
         
-        view.layoutIfNeeded()
-        
-    
         
         
     }
     
+    
     @objc func didTap() {
-        print("hello")
-        graphView1.layer.zPosition = 1;
-        graphView1.layer.shouldRasterize = true
-        graphView1.layer.rasterizationScale = 10
-        view.bringSubview(toFront: graphView1)
-        let originalTransform = graphView1.transform
-        let scaledTransform = originalTransform.scaledBy(x: 2, y: 2)
         
-        let centerScreen: CGPoint = CGPoint(x: (UIScreen.main.bounds.width/2.0), y: (UIScreen.main.bounds.height - (self.tabBarController?.tabBar.frame.size.height)!)/2.0) //(UIScreen.main.bounds.width/2.0,(UIScreen.main.bounds.height/2) - (self.tabBarController?.tabBar.frame.size.height)!)
-        let graphView1Center = graphView1.center
-        let viewCenter = self.view.center
-        let xtransform = centerScreen.x - graphView1Center.x
-        let ytransform = (centerScreen.y - graphView1Center.y) //- (self.tabBarController?.tabBar.frame.size.height)!
-        let scaledAndTranslatedTransform = scaledTransform.translatedBy(x: 0.5 * xtransform , y: 0.5 * ytransform)
-        UIView.animate(withDuration: 0.5, animations: {
-            self.graphView1.transform = scaledAndTranslatedTransform
-        })
+        print("hey")
+        
+        graphView1.removeFromSuperview()
+        graphView2.removeFromSuperview()
+        graphView3.removeFromSuperview()
+        graphView4.removeFromSuperview()
+        
+        topStackView.removeFromSuperview()
+        bottomStackView.removeFromSuperview()
+        
 
+        self.view.addSubview(graphView1)
+        //fullScreenView = graphView1
+        //fullScreenView.center = self.view.center
+        //NSLayoutConstraint.deactivate(fullScreenView.constraints)
+
+
+        //fullScreenView.isUserInteractionEnabled = true
+
+
+        NSLayoutConstraint.activate([
+        graphView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+        graphView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+        graphView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        graphView1.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+        ])
+
+        graphView1.transform = CGAffineTransform.init(translationX: -100, y: -100)
+        graphView1.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+        graphView1.alpha = 0
+        //graphView1.layer.zPosition = 1;
+        UIView.animate(withDuration: 0.4) {
+            self.visualEffectView.effect = self.effect
+            self.graphView1.alpha = 1
+            self.graphView1.transform = CGAffineTransform.identity
+            self.graphView1.transform = CGAffineTransform(translationX: 100, y: 100)
+        }
+        
+        graphView1.removeGestureRecognizer(tap)
+        tap = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+        graphView1.addGestureRecognizer(tap)
+
+        //fullScreenView.graphWasTapped(controller: self)
     }
     
     @objc func didTapAgain() {
-        
+        print("johnny")
         UIView.animate(withDuration: 0.3, animations: {
-            self.fullScreenView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
-            self.fullScreenView.alpha = 0
+            self.graphView1.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+            self.graphView1.alpha = 0
             
             self.visualEffectView.effect = nil
             
         }) { (success:Bool) in
-            self.fullScreenView.removeFromSuperview()
+            self.graphView1.removeFromSuperview()
+            self.graphView1.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+            self.setupViews()
         }
-        
     }
     
     

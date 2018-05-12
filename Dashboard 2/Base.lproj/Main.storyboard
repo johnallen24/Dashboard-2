@@ -29,7 +29,7 @@
         <!--Item 1-->
         <scene sceneID="I4d-hO-zGz">
             <objects>
-                <viewController id="1DE-3R-x33" customClass="ViewController" customModule="Dashboard_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1DE-3R-x33" customClass="dashBoardController" customModule="Dashboard_2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iV2-ba-FyK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
