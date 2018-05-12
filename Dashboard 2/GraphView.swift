@@ -141,7 +141,11 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     }()
     
     
-    
+    let coverView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     
     func setupViews() {
@@ -153,6 +157,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         topContainer.addSubview(pieChart)
         bottomContainer.addSubview(horizontalProgressBar)
         bottomContainer.addSubview(verticalProgressBar)
+        self.addSubview(coverView)
         
         titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
@@ -199,6 +204,15 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         verticalProgressBar.leadingAnchor.constraint(equalTo: pieChart.trailingAnchor, constant: 0).isActive = true
         verticalProgressBar.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: 0).isActive = true
         //verticalProgressBar.barMaxHeight = bottomContainer.bounds.height
+        
+        
+        coverView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
+        coverView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
+        coverView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
+        coverView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        
+        coverView.backgroundColor = UIColor.clear
+        
         
         
     }

@@ -113,7 +113,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         visualEffectView.effect = nil
         
         
-// NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     view.backgroundColor = colorWithHexString(hexString: "f0f0f0") //f0f0f0
         //view.setGradientBackground(colorOne: colorWithHexString(hexString: "f0f0f0"), colorTwo: colorWithHexString(hexString: "4d4b4e"))
         setupViews()
@@ -202,7 +202,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         
         print("hey")
         
-        graphView1.removeFromSuperview()
+        //graphView1.removeFromSuperview()
         graphView2.removeFromSuperview()
         graphView3.removeFromSuperview()
         graphView4.removeFromSuperview()
@@ -212,12 +212,6 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         
 
         self.view.addSubview(graphView1)
-        //fullScreenView = graphView1
-        //fullScreenView.center = self.view.center
-        //NSLayoutConstraint.deactivate(fullScreenView.constraints)
-
-
-        //fullScreenView.isUserInteractionEnabled = true
 
 
         NSLayoutConstraint.activate([
@@ -227,91 +221,74 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         graphView1.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
         ])
         
-       // UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseIn, animations: { _ in self.view.layoutIfNeeded() }, completion: nil) {
+      
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-        
+        tap = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+        graphView1.addGestureRecognizer(tap)
 
-//        let firsttrans = CGAffineTransform.init(scaleX: 0.4, y: 0.4)
-//        graphView1.transform = firsttrans.translatedBy(x: -400, y: -400)
-////        graphView1.transform = CGAffineTransform.init(translationX: -500, y: -500)
-////        graphView1.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
-//        //graphView1.alpha = 0
-//        //graphView1.layer.zPosition = 1;
-//
-//
-//
-//
-//        UIView.animate(withDuration: 0.5) {
-//            self.visualEffectView.effect = self.effect
-//            //self.graphView1.alpha = 1
-//            self.graphView1.transform = CGAffineTransform.identity
-//            //self.graphView1.transform = CGAffineTransform(translationX: 0, y: 0)
-//        }
-//
-//        graphView1.removeGestureRecognizer(tap)
-//        tap = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
-//        graphView1.addGestureRecognizer(tap)
-//
-//        //fullScreenView.graphWasTapped(controller: self)
 }
     
     @objc func didTapAgain() {
         print("johnny")
         
-        //graphView1.transform = CGAffineTransform.identity
-        let initialTransform = CGAffineTransform.init(scaleX: 0.4, y: 0.4)
-        let finalTransform = initialTransform.translatedBy(x: -400, y: -400)
-        UIView.animate(withDuration: 0.3, animations: {
-            self.graphView1.transform = finalTransform
-            //self.graphView1.alpha = 0
-            self.setupViews()
-            self.visualEffectView.effect = nil
-            
-        }) { (success:Bool) in
-            //self.graphView1.removeFromSuperview()
-            //self.graphView1.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-            //self.setupViews()
+        setupViews()
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+        
         }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        setupViews()
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
     }
-    
-    
     @objc func rotated() {
         
 //        NSLayoutConstraint.deactivate([topStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
 //            bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)])
         
-        NSLayoutConstraint.deactivate([
-              topStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-            topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            topStackView.heightAnchor.constraint(equalToConstant: (oldHeight/2) - 60)
-            ])
+//        graphView1.removeFromSuperview()
+//        graphView2.removeFromSuperview()
+//        graphView3.removeFromSuperview()
+//        graphView4.removeFromSuperview()
+//
+//        topStackView.removeFromSuperview()
+//        bottomStackView.removeFromSuperview()
         
-        NSLayoutConstraint.deactivate([
-            bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            bottomStackView.heightAnchor.constraint(equalToConstant: (oldHeight/2) - 60),
-            bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)])
         
-        oldHeight = newViewHeight
-        NSLayoutConstraint.activate([
-            topStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-            topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            topStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)
-            ])
         
-
-        NSLayoutConstraint.activate([
-            bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-             bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
-            bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
-            
+//
+//        NSLayoutConstraint.deactivate([
+//              topStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+//            topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//            topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            topStackView.heightAnchor.constraint(equalToConstant: (oldHeight/2) - 60)
+//            ])
+//
+//        NSLayoutConstraint.deactivate([
+//            bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            bottomStackView.heightAnchor.constraint(equalToConstant: (oldHeight/2) - 60),
+//            bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)])
+        
+//        oldHeight = newViewHeight
+//        NSLayoutConstraint.activate([
+//            topStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+//            topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//            topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            topStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)
+//            ])
+//
+//
+//        NSLayoutConstraint.activate([
+//            bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//             bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
+//            bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
+        
             //bottomStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 40),
            
-            ])
+           // ])
+        
         
         print("hey")
     }
