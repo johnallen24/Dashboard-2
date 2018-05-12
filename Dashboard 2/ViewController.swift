@@ -15,7 +15,15 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         return true
     }
     
-    
+    var viewCenter: CGPoint {
+        get {
+            let tabBarHeight = self.tabBarController?.tabBar.frame.size.height
+            let centerY: CGFloat = (view.bounds.height - tabBarHeight!)/2.0
+            let centerX: CGFloat = (view.bounds.width)/2.0
+            let center = CGPoint(x: centerX, y: centerY)
+            return center
+        }
+    }
    
     var newViewHeight: CGFloat {
         get {
@@ -113,6 +121,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     
     func setupViews() {
+        
         
         graphView1.alpha = 1
         topStackView = UIStackView(arrangedSubviews: [graphView1, graphView2])
@@ -217,37 +226,52 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         graphView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         graphView1.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
         ])
-
-        graphView1.transform = CGAffineTransform.init(translationX: -100, y: -100)
-        graphView1.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
-        graphView1.alpha = 0
-        //graphView1.layer.zPosition = 1;
-        UIView.animate(withDuration: 0.4) {
-            self.visualEffectView.effect = self.effect
-            self.graphView1.alpha = 1
-            self.graphView1.transform = CGAffineTransform.identity
-            self.graphView1.transform = CGAffineTransform(translationX: 100, y: 100)
-        }
         
-        graphView1.removeGestureRecognizer(tap)
-        tap = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
-        graphView1.addGestureRecognizer(tap)
+       // UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseIn, animations: { _ in self.view.layoutIfNeeded() }, completion: nil) {
+        
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+        
 
-        //fullScreenView.graphWasTapped(controller: self)
-    }
+//        let firsttrans = CGAffineTransform.init(scaleX: 0.4, y: 0.4)
+//        graphView1.transform = firsttrans.translatedBy(x: -400, y: -400)
+////        graphView1.transform = CGAffineTransform.init(translationX: -500, y: -500)
+////        graphView1.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+//        //graphView1.alpha = 0
+//        //graphView1.layer.zPosition = 1;
+//
+//
+//
+//
+//        UIView.animate(withDuration: 0.5) {
+//            self.visualEffectView.effect = self.effect
+//            //self.graphView1.alpha = 1
+//            self.graphView1.transform = CGAffineTransform.identity
+//            //self.graphView1.transform = CGAffineTransform(translationX: 0, y: 0)
+//        }
+//
+//        graphView1.removeGestureRecognizer(tap)
+//        tap = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+//        graphView1.addGestureRecognizer(tap)
+//
+//        //fullScreenView.graphWasTapped(controller: self)
+}
     
     @objc func didTapAgain() {
         print("johnny")
+        
+        //graphView1.transform = CGAffineTransform.identity
+        let initialTransform = CGAffineTransform.init(scaleX: 0.4, y: 0.4)
+        let finalTransform = initialTransform.translatedBy(x: -400, y: -400)
         UIView.animate(withDuration: 0.3, animations: {
-            self.graphView1.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
-            self.graphView1.alpha = 0
-            
+            self.graphView1.transform = finalTransform
+            //self.graphView1.alpha = 0
+            self.setupViews()
             self.visualEffectView.effect = nil
             
         }) { (success:Bool) in
-            self.graphView1.removeFromSuperview()
-            self.graphView1.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-            self.setupViews()
+            //self.graphView1.removeFromSuperview()
+            //self.graphView1.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+            //self.setupViews()
         }
     }
     
