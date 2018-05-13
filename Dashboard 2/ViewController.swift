@@ -36,9 +36,6 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     
     var newView: UIView!
-        
-        //let rect = CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
-    
     
     
    var fullScreenView: GraphView!
@@ -58,6 +55,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.backgroundColor = UIColor.white
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
+        view.graphColor = .blue
         return view
     }()
     
@@ -68,6 +66,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.backgroundColor = UIColor.white
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
+        view.graphColor = .orange
         return view
     }()
     
@@ -78,6 +77,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.backgroundColor = UIColor.white
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
+        view.graphColor = .pink
         return view
     }()
     
@@ -88,6 +88,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.backgroundColor = UIColor.white
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
+        view.graphColor = .purple
         return view
     }()
     
@@ -104,7 +105,10 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     }()
     
     
-    var tap: UITapGestureRecognizer!
+    var tap1: UITapGestureRecognizer!
+    var tap2: UITapGestureRecognizer!
+    var tap3: UITapGestureRecognizer!
+    var tap4: UITapGestureRecognizer!
 
     
     
@@ -120,7 +124,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    view.backgroundColor = colorWithHexString(hexString: "4d4b4e") //f0f0f0
+    view.backgroundColor = colorWithHexString(hexString: "f0f0f0") //f0f0f0 4d4b4e
         //view.setGradientBackground(colorOne: colorWithHexString(hexString: "f0f0f0"), colorTwo: colorWithHexString(hexString: "4d4b4e"))
         setupViews()
     }
@@ -166,8 +170,14 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         //            topContainer.heightAnchor.constraint(equalToConstant: 40)
         //        ])
         
-        tap = UITapGestureRecognizer(target: self, action: #selector(didTap))
-        graphView1.addGestureRecognizer(tap)
+        tap1 = UITapGestureRecognizer(target: self, action: #selector(didTap1))
+        tap2 = UITapGestureRecognizer(target: self, action: #selector(didTap2))
+        tap3 = UITapGestureRecognizer(target: self, action: #selector(didTap3))
+        tap4 = UITapGestureRecognizer(target: self, action: #selector(didTap4))
+        graphView1.addGestureRecognizer(tap1)
+        graphView2.addGestureRecognizer(tap2)
+        graphView3.addGestureRecognizer(tap3)
+        graphView4.addGestureRecognizer(tap4)
         
         
         
@@ -204,48 +214,120 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     
-    @objc func didTap() {
+    @objc func didTap1() {
+        tapAnimate(graphView: 1)
         
-        print("hey")
+    }
+    
+    
+    @objc func didTap2() {
+        tapAnimate(graphView: 2)
         
+    }
+    
+    @objc func didTap3() {
+        tapAnimate(graphView: 3)
+        
+    }
+    
+    @objc func didTap4() {
+        tapAnimate(graphView: 4)
+        
+    }
+    
+    func tapAnimate(graphView: Int)
+    
+    {
+        _ = graphView3.constraints
+        
+        switch graphView {
+        case 1:
+            self.view.addSubview(graphView1)
+            
+            NSLayoutConstraint.activate([
+                graphView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+                graphView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                graphView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                graphView1.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+                ])
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+            tap1 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+            graphView1.addGestureRecognizer(tap1)
+   
+        case 2:
+            self.view.addSubview(graphView2)
+            
+            NSLayoutConstraint.activate([
+                graphView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+                graphView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                graphView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                graphView2.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+                ])
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+            tap2 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+            graphView2.addGestureRecognizer(tap2)
+       
+        case 3:
+            self.view.addSubview(graphView3)
+
+            NSLayoutConstraint.activate([
+                graphView3.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
+                 graphView3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                graphView3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                graphView3.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+                ])
+            
+           
+            
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+            tap3 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+            graphView3.addGestureRecognizer(tap3)
+            
+        case 4:
+            self.view.addSubview(graphView4)
+            
+            NSLayoutConstraint.activate([
+                graphView4.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+                graphView4.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                graphView4.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+                graphView4.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+                ])
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+            tap4 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+            graphView4.addGestureRecognizer(tap4)
+        default:
+            print("noooo")
+        }
         //graphView1.removeFromSuperview()
-        graphView2.removeFromSuperview()
-        graphView3.removeFromSuperview()
-        graphView4.removeFromSuperview()
+//        graphView2.removeFromSuperview()
+//        graphView3.removeFromSuperview()
+//        graphView4.removeFromSuperview()
+//        topStackView.removeFromSuperview()
+//        bottomStackView.removeFromSuperview()
         
-        topStackView.removeFromSuperview()
-        bottomStackView.removeFromSuperview()
         
-
-        self.view.addSubview(graphView1)
-
-
-        NSLayoutConstraint.activate([
-        graphView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-        graphView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-        graphView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-        graphView1.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
-        ])
-        
-      
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-        
-        tap = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
-        graphView1.addGestureRecognizer(tap)
-
-}
+    }
+    
+    
     
     @objc func didTapAgain() {
         print("johnny")
         
         setupViews()
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+        UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
+        //UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
         
         }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         setupViews()
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+        UIView.animate(withDuration: 0.7, animations: {self.view.layoutIfNeeded()})
+       
+        //UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
     }
     @objc func rotated() {
         

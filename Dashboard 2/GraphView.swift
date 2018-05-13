@@ -12,23 +12,12 @@ import GTProgressBar
 
 class GraphView: UIView, UIGestureRecognizerDelegate {
     
-//    func graphWasTapped(controller: dashBoardController) {
-//        
-//        let tap2 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
-//        tap2.delegate = self
-//        self.addGestureRecognizer(tap2)
-//        
-//        dcontroller = controller
-//        
-//        
-//    }
-//    
-//    var dcontroller: dashBoardController?
-//    
-////    @objc func didTapAgain() {
-////        
-////        dcontroller?.didTapAgain()
-////    }
+    enum colors {
+        case pink
+        case blue
+        case orange
+        case purple
+    }
     
     
     
@@ -56,13 +45,13 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         super.init(frame: frame)
         
         
-        horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#fe117c")
-        horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
-        horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
-        verticalProgressBar.barBorderColor = colorWithHexString(hexString: "#fe117c")
-        verticalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
-        verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
-        pieChart.set(colors: colorWithHexString(hexString: "#fe117c"))
+//        horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#fe117c")
+//        horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
+//        horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
+//        verticalProgressBar.barBorderColor = colorWithHexString(hexString: "#fe117c")
+//        verticalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
+//        verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
+//        pieChart.set(colors: colorWithHexString(hexString: "#fe117c"))
         var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         setupViews()
     }
@@ -71,7 +60,44 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    override func willMove(toSuperview newSuperview: UIView?) {
+        switch graphColor {
+        case .blue:
+            pieChart.set(colors: colorWithHexString(hexString: "#02aab0"))
+            horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#02aab0")
+            horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#02aab0")
+            horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#02aab0").withAlphaComponent(0.2)
+            verticalProgressBar.barBorderColor = colorWithHexString(hexString: "#02aab0")
+            verticalProgressBar.barFillColor = colorWithHexString(hexString: "#02aab0")
+            verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#02aab0").withAlphaComponent(0.2)
+            
+        case .orange:
+            pieChart.set(colors: colorWithHexString(hexString: "#fb594a"))
+            horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#fb594a")
+            horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#fb594a")
+            horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fb594a").withAlphaComponent(0.2)
+            verticalProgressBar.barBorderColor = colorWithHexString(hexString: "#fefb594a117c")
+            verticalProgressBar.barFillColor = colorWithHexString(hexString: "#fb594a")
+            verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fb594a").withAlphaComponent(0.2)
+        case .purple:
+            pieChart.set(colors: colorWithHexString(hexString: "#814ae9"))
+            horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#814ae9")
+            horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#814ae9")
+            horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#814ae9").withAlphaComponent(0.2)
+            verticalProgressBar.barBorderColor = colorWithHexString(hexString: "#814ae9")
+            verticalProgressBar.barFillColor = colorWithHexString(hexString: "#814ae9")
+            verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#814ae9").withAlphaComponent(0.2)
+        case .pink:
+            pieChart.set(colors: colorWithHexString(hexString: "#fe117c"))
+            horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#fe117c")
+            horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
+            horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
+            verticalProgressBar.barBorderColor = colorWithHexString(hexString: "#fe117c")
+            verticalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
+            verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
+       
+        }
+    }
     
     
     
@@ -228,7 +254,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         case battery
     }
     
-    
+     var graphColor: colors = .pink
     var graphName: names = .voltage
     
     @objc func update() {
@@ -276,24 +302,54 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         let chartDataSet = LineChartDataSet(values: lineChartEntry, label: "Voltage")
         let chartData = LineChartData()
         
+        
+        chartDataSet.fillAlpha = 1
+        let gradientColors: CFArray
+        switch graphColor {
+        case .blue:
+             gradientColors = [colorWithHexString(hexString: "#00cdac").cgColor, colorWithHexString(hexString: "#02aab0").cgColor] as CFArray
+            chartDataSet.colors = [colorWithHexString(hexString: "#00cdac")]
+            
+        case .orange:
+             gradientColors = [colorWithHexString(hexString: "#fd9d32").cgColor, colorWithHexString(hexString: "#fb594a").cgColor] as CFArray
+         chartDataSet.colors = [colorWithHexString(hexString: "#fd9d32")]
+        case .purple:
+           gradientColors = [colorWithHexString(hexString: "#3a84f8").cgColor, colorWithHexString(hexString: "#814ae9").cgColor] as CFArray
+            chartDataSet.colors = [colorWithHexString(hexString: "#3a84f8")]
+        case .pink:
+            gradientColors = [colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.8).cgColor, colorWithHexString(hexString: "#fe117c").cgColor] as CFArray
+            chartDataSet.colors = [colorWithHexString(hexString: "#fc6767")]
+         
+        }
+        
+        
+        //let gradientColors = [colorWithHexString(hexString: "#fe117c").cgColor, UIColor.clear.cgColor] as CFArray
+//        chartDataSet.colors = [colorWithHexString(hexString: "#fe117c")]
+//        chartDataSet.setCircleColor(colorWithHexString(hexString: "#fe117c"))
+//        chartDataSet.circleHoleColor = colorWithHexString(hexString: "#fe117c")
+        
+        
+        
+        
+        let colorLocations: [CGFloat] = [1.0, 0.0]
+        guard let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) else { print("gradient error"); return }
+        chartDataSet.fill = Fill.fillWithLinearGradient(gradient, angle: 90.0)
+        chartDataSet.drawFilledEnabled = true
+
+        
+        
         chartData.addDataSet(chartDataSet)
         chartData.setDrawValues(false)
-        chartDataSet.colors = [colorWithHexString(hexString: "#fe117c")]
-        chartDataSet.setCircleColor(colorWithHexString(hexString: "#fe117c"))
-        chartDataSet.circleHoleColor = colorWithHexString(hexString: "#fe117c")
+        
         //#03C03C
-        chartDataSet.circleRadius = 5
+        chartDataSet.circleRadius = 0
         //chartDataSet.circleHoleRadius = 3
         //chartDataSet.circleHoleColor  = UIColor.white
         
         chartDataSet.drawCirclesEnabled = true
         chartDataSet.lineWidth = 2
         chartDataSet.mode = .horizontalBezier
-        let gradientColors = [colorWithHexString(hexString: "#fe117c").cgColor, UIColor.clear.cgColor] as CFArray
-        let colorLocations: [CGFloat] = [1.0, 0.0]
-        guard let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) else { print("gradient error"); return }
-        chartDataSet.fill = Fill.fillWithLinearGradient(gradient, angle: 90.0)
-        chartDataSet.drawFilledEnabled = true
+
         
         chtChart.leftAxis.axisMinimum = 0
         chtChart.chartDescription?.text = ""
