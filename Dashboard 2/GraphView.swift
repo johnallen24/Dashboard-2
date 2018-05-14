@@ -99,9 +99,6 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    
-    
-    
     let titleLabel: UITextView = {
         let textView = UITextView()
         textView.text = "Voltage"

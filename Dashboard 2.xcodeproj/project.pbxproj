@@ -17,6 +17,7 @@
 		ABBC774720A5F84700825365 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABBC774420A5F84700825365 /* Info.plist */; };
 		ABBC774820A5F84700825365 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC774620A5F84700825365 /* KDCircularProgress.swift */; };
 		ABBC774C20A79D8B00825365 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC774B20A79D8B00825365 /* Extensions.swift */; };
+		ABBC774E20A9DAB100825365 /* SurfaceCoilController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		ABBC774520A5F84700825365 /* KDCircularProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDCircularProgress.h; sourceTree = "<group>"; };
 		ABBC774620A5F84700825365 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		ABBC774B20A79D8B00825365 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceCoilController.swift; sourceTree = "<group>"; };
 		B19D281E05C588D7297C4936 /* Pods-Dashboard 2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dashboard 2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dashboard 2/Pods-Dashboard 2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 				ABBC774320A5F84700825365 /* KDCircularProgress */,
 				ABBC772C20A5F73000825365 /* AppDelegate.swift */,
 				ABBC772E20A5F73000825365 /* ViewController.swift */,
+				ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */,
 				ABBC773E20A5F7D700825365 /* GraphView.swift */,
 				ABBC774B20A79D8B00825365 /* Extensions.swift */,
 				ABBC773020A5F73000825365 /* Main.storyboard */,
@@ -243,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABBC774E20A9DAB100825365 /* SurfaceCoilController.swift in Sources */,
 				ABBC774C20A79D8B00825365 /* Extensions.swift in Sources */,
 				ABBC774820A5F84700825365 /* KDCircularProgress.swift in Sources */,
 				ABBC772F20A5F73000825365 /* ViewController.swift in Sources */,

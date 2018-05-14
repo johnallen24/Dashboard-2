@@ -29,8 +29,6 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         get {
             let tabBarHeight = self.tabBarController?.tabBar.frame.size.height
             return UIScreen.main.bounds.height - tabBarHeight!
-            
-            
         }
     }
     
@@ -110,6 +108,10 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     var tap3: UITapGestureRecognizer!
     var tap4: UITapGestureRecognizer!
 
+    var taptap1 = UITapGestureRecognizer(target: self, action: #selector(didTap1))
+    var taptap2 = UITapGestureRecognizer(target: self, action: #selector(didTap2))
+    var taptap3 = UITapGestureRecognizer(target: self, action: #selector(didTap3))
+    var taptap4 = UITapGestureRecognizer(target: self, action: #selector(didTap4))
     
     
     var topStackView: UIStackView!
@@ -123,7 +125,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         visualEffectView.effect = nil
         
         NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-        view.backgroundColor = colorWithHexString(hexString: "f0f0f0") //f0f0f0 4d4b4e
+        view.backgroundColor = colorWithHexString(hexString: "#f0f0f0") //f0f0f0 4d4b4e e3e3e5
         //view.setGradientBackground(colorOne: colorWithHexString(hexString: "f0f0f0"), colorTwo: colorWithHexString(hexString: "4d4b4e"))
         setupViews()
     }
@@ -135,47 +137,34 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     var rightAnchor: NSLayoutConstraint?
     var widthAnchor: NSLayoutConstraint?
     
+    var topAnchor2: NSLayoutConstraint?
+    var bottomAnchor2: NSLayoutConstraint?
+    var leftAnchor2: NSLayoutConstraint?
+    var rightAnchor2: NSLayoutConstraint?
+    var widthAnchor2: NSLayoutConstraint?
+    
     var topAnchor3: NSLayoutConstraint?
     var bottomAnchor3: NSLayoutConstraint?
     var leftAnchor3: NSLayoutConstraint?
     var rightAnchor3: NSLayoutConstraint?
     var widthAnchor3: NSLayoutConstraint?
     
-    var topAnchor32: NSLayoutConstraint?
-    var bottomAnchor32: NSLayoutConstraint?
-    var leftAnchor32: NSLayoutConstraint?
-    var rightAnchor32: NSLayoutConstraint?
-    var widthAnchor32: NSLayoutConstraint?
+    var topAnchor4: NSLayoutConstraint?
+    var bottomAnchor4: NSLayoutConstraint?
+    var leftAnchor4: NSLayoutConstraint?
+    var rightAnchor4: NSLayoutConstraint?
+    var widthAnchor4: NSLayoutConstraint?
     
     
     
     func setupViews() {
         
-      
-//        topStackView = UIStackView(arrangedSubviews: [graphView1, graphView2])
-//        topStackView.translatesAutoresizingMaskIntoConstraints = false
-//        bottomStackView = UIStackView(arrangedSubviews: [graphView3, graphView4])
-//        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        topStackView.distribution = .fillEqually
-//        //topStackView.alignment = .center
-//        topStackView.axis = .horizontal
-//        topStackView.spacing = 20
-//        bottomStackView.distribution = .fillEqually
-//        //bottomStackView.alignment = .center
-//        bottomStackView.axis = .horizontal
-//        bottomStackView.spacing = 20
-//
-        
-        
-        //topStackView.backgroundColor = UIColor.blue
-        //bottomStackView.backgroundColor = UIColor.green
-        
-        
-        
-        
-//        view.addSubview(topStackView)
-//        view.addSubview(bottomStackView)
+        topContainer.removeFromSuperview()
+        bottomContainer.removeFromSuperview()
+        graphView1.removeFromSuperview()
+        graphView2.removeFromSuperview()
+        graphView3.removeFromSuperview()
+        graphView4.removeFromSuperview()
         
         view.addSubview(topContainer)
         view.addSubview(bottomContainer)
@@ -183,29 +172,23 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         topContainer.addSubview(graphView2)
         bottomContainer.addSubview(graphView3)
         bottomContainer.addSubview(graphView4)
-        //graphView1.layer.zPosition = 1
-        
-        
-        
-        
         
         NSLayoutConstraint.activate([
             topContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
             topContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             topContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            topContainer.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)
+            topContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5, constant: -((self.tabBarController?.tabBar.frame.size.height)! + 40)),
+           // topContainer.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)
             ])
         
         NSLayoutConstraint.activate([
             bottomContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             bottomContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            bottomContainer.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
+            bottomContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5, constant: -((self.tabBarController?.tabBar.frame.size.height)! + 40)),
+            //bottomContainer.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
             bottomContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
-            
             //bottomStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 40),
-            
             ])
-        
         
         tap1 = UITapGestureRecognizer(target: self, action: #selector(didTap1))
         tap2 = UITapGestureRecognizer(target: self, action: #selector(didTap2))
@@ -217,49 +200,41 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         graphView4.addGestureRecognizer(tap4)
         
         
-       
-        
-        
-       // NSLayoutConstraint.deactivate(graphView1.constraints)
-        
-        
         topAnchor =  graphView1.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0)
         topAnchor?.isActive = true
         bottomAnchor = graphView1.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0)
         bottomAnchor?.isActive = true
         leftAnchor = graphView1.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0)
         leftAnchor?.isActive = true
-        widthAnchor = graphView1.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5)
+        widthAnchor = graphView1.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5, constant: -10)
         widthAnchor?.isActive = true
+        
+        
+        topAnchor2 =  graphView2.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0)
+        topAnchor2?.isActive = true
+        bottomAnchor2 =  graphView2.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0)
+        bottomAnchor2?.isActive = true
+        rightAnchor2 = graphView2.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0)
+        rightAnchor2?.isActive = true
+        widthAnchor2 =  graphView2.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5, constant: -10)
+        widthAnchor2?.isActive = true
+        
+        
 //        NSLayoutConstraint.activate([
-//            graphView1.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0),
-//            graphView1.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0),
-//            graphView1.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0),
-//            graphView1.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5)
+//            graphView2.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0),
+//            graphView2.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5),
+//            graphView2.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0),
+//            graphView2.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0)
 //            ])
-        
-        NSLayoutConstraint.activate([
-            graphView2.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0),
-            graphView2.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5),
-            graphView2.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0),
-            graphView2.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0)
-            ])
-        
+//
         topAnchor3 =  graphView3.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0)
         topAnchor3?.isActive = true
         bottomAnchor3 = graphView3.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0)
         bottomAnchor3?.isActive = true
         leftAnchor3 = graphView3.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 0)
         leftAnchor3?.isActive = true
-        widthAnchor3 = graphView3.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5)
+        widthAnchor3 = graphView3.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5, constant: -10)
         widthAnchor3?.isActive = true
-        
-       
-        topAnchor32 = graphView3.topAnchor.constraint(equalTo: view.topAnchor, constant: 40)
-        leftAnchor32 = graphView3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
-        rightAnchor32 = graphView3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        bottomAnchor32 = graphView3.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
-        
         
         
 //        NSLayoutConstraint.activate([
@@ -269,43 +244,26 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
 //            graphView3.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5)
 //            ])
         
-        NSLayoutConstraint.activate([
-            graphView4.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0),
-            graphView4.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5),
-            graphView4.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0),
-            graphView4.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: 0)
-            ])
+        topAnchor4 =  graphView4.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0)
+        topAnchor4?.isActive = true
+        bottomAnchor4 = graphView4.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0)
+        bottomAnchor4?.isActive = true
+        rightAnchor4 =  graphView4.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: 0)
+        rightAnchor4?.isActive = true
+        widthAnchor4 = graphView4.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5, constant: -10)
+        widthAnchor4?.isActive = true
         
-        
-//        NSLayoutConstraint.activate([
-//            topStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-//            topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            topStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)
-//            ])
-        
-        //        NSLayoutConstraint.activate([
-        //            middleContainer.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 0),
-        //            middleContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-        //            middleContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-        //            middleContainer.heightAnchor.constraint(equalToConstant: 40),
-        //            //middleContainer.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: 0)
-        //            ])
         
         
 //        NSLayoutConstraint.activate([
-//            bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
-//            bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
-//
-//            //bottomStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 40),
-//
+//            graphView4.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0),
+//            graphView4.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5),
+//            graphView4.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0),
+//            graphView4.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: 0)
 //            ])
+    
         
         oldHeight = newViewHeight
-        
-         //graphView1.round(corners: [UIRectCorner.bottomLeft, UIRectCorner.bottomRight], radius: 50)
         
     }
     
@@ -334,7 +292,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     func tapAnimate(graphView: Int)
     
     {
-        _ = graphView3.constraints
+      
 //        graphView1.removeFromSuperview()
 //        graphView2.removeFromSuperview()
 //        graphView3.removeFromSuperview()
@@ -344,8 +302,6 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
 //
         switch graphView {
         case 1:
-            //self.view.addSubview(graphView1)
-            //view.layer.zPosition = 1
             topContainer.bringSubview(toFront: graphView1)
             view.bringSubview(toFront: topContainer)
             
@@ -362,49 +318,65 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
             bottomAnchor = graphView1.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
             bottomAnchor?.isActive = true
             
-           
-            
-//            NSLayoutConstraint.activate([
-//                graphView1.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-//                graphView1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//                graphView1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//                graphView1.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
-//                ])
-            
-            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-           graphView1.removeGestureRecognizer(tap1)
-            let tap5 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
-            graphView1.addGestureRecognizer(tap5)
+            UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
+            tap1 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain1))
+            graphView1.removeGestureRecognizer(tap1)
+            graphView1.addGestureRecognizer(tap1)
+            graphView2.removeGestureRecognizer(tap2)
+            graphView3.removeGestureRecognizer(tap3)
+            graphView4.removeGestureRecognizer(tap4)
    
         case 2:
-            self.view.addSubview(graphView2)
+            topContainer.bringSubview(toFront: graphView2)
+            view.bringSubview(toFront: topContainer)
             
-            NSLayoutConstraint.activate([
-                graphView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-                graphView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                graphView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-                graphView2.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
-                ])
+            widthAnchor2?.isActive = false
+            topAnchor2?.isActive = false
+            leftAnchor2?.isActive = false
+            bottomAnchor2?.isActive = false
+            topAnchor2 =  graphView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 40)
+            topAnchor2?.isActive = true
+            leftAnchor2 = graphView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            leftAnchor2?.isActive = true
+            rightAnchor2 = graphView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            rightAnchor2?.isActive = true
+            bottomAnchor2 = graphView2.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+            bottomAnchor2?.isActive = true
             
-            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-            tap2 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+            
+//            NSLayoutConstraint.activate([
+//                graphView2.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+//                graphView2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//                graphView2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//                graphView2.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+//                ])
+//
+            
+            UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
+            
+            graphView2.removeGestureRecognizer(tap2)
+            tap2 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain2))
             graphView2.addGestureRecognizer(tap2)
-       
+            graphView1.removeGestureRecognizer(tap1)
+            graphView3.removeGestureRecognizer(tap3)
+            graphView4.removeGestureRecognizer(tap4)
+            
         case 3:
             bottomContainer.bringSubview(toFront: graphView3)
             view.bringSubview(toFront: bottomContainer)
+            
             widthAnchor3?.isActive = false
             topAnchor3?.isActive = false
             leftAnchor3?.isActive = false
             bottomAnchor3?.isActive = false
-            //topAnchor3 = graphView3.topAnchor.constraint(equalTo: view.topAnchor, constant: 40)
-            topAnchor32?.isActive = true
-            //leftAnchor3 = graphView3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
-            leftAnchor32?.isActive = true
-            //rightAnchor3 = graphView3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-            rightAnchor32?.isActive = true
-            //bottomAnchor3 = graphView3.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
-            bottomAnchor32?.isActive = true
+            topAnchor3 = graphView3.topAnchor.constraint(equalTo: view.topAnchor, constant: 40)
+            topAnchor3?.isActive = true
+            leftAnchor3 = graphView3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            leftAnchor3?.isActive = true
+            rightAnchor3 = graphView3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            rightAnchor3?.isActive = true
+            bottomAnchor3 = graphView3.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+            bottomAnchor3?.isActive = true
             
 //            NSLayoutConstraint.activate([
 //                graphView3.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
@@ -412,41 +384,180 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
 //                graphView3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 //                graphView3.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
 //                ])
-            //view.layoutIfNeeded()
-            print("touche")
            
-            
             UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
-           // UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-            tap3 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+            graphView3.removeGestureRecognizer(tap3)
+            tap3 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain3))
             graphView3.addGestureRecognizer(tap3)
+            graphView1.removeGestureRecognizer(tap1)
+            graphView2.removeGestureRecognizer(tap2)
+            graphView4.removeGestureRecognizer(tap4)
             
         case 4:
-            self.view.addSubview(graphView4)
-              print("touche")
-            NSLayoutConstraint.activate([
-                graphView4.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-                graphView4.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                graphView4.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-                graphView4.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
-                ])
+            bottomContainer.bringSubview(toFront: graphView4)
+            view.bringSubview(toFront: bottomContainer)
             
-            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-            tap4 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain))
+            widthAnchor4?.isActive = false
+            topAnchor4?.isActive = false
+            leftAnchor4?.isActive = false
+            rightAnchor4?.isActive = false
+            bottomAnchor4?.isActive = false
+            
+            topAnchor4 = graphView4.topAnchor.constraint(equalTo: view.topAnchor, constant: 40)
+            topAnchor4?.isActive = true
+           leftAnchor4 = graphView4.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            leftAnchor4?.isActive = true
+           rightAnchor4 = graphView4.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            rightAnchor4?.isActive = true
+            bottomAnchor4 = graphView4.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+            bottomAnchor4?.isActive = true
+            
+//            NSLayoutConstraint.activate([
+//                graphView4.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+//                graphView4.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//                graphView4.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//                graphView4.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)
+//                ])
+           
+            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+             //UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
+            graphView4.removeGestureRecognizer(tap4)
+            tap4 = UITapGestureRecognizer(target: self, action: #selector(didTapAgain4))
             graphView4.addGestureRecognizer(tap4)
+            graphView1.removeGestureRecognizer(tap1)
+            graphView2.removeGestureRecognizer(tap2)
+            graphView3.removeGestureRecognizer(tap3)
+           
+            
         default:
             print("noooo")
         }
         
-        
-        
     }
     
+    @objc func didTapAgain1() {
+        
+        widthAnchor?.isActive = false
+        topAnchor?.isActive = false
+        leftAnchor?.isActive = false
+        bottomAnchor?.isActive = false
+        rightAnchor?.isActive = false
+        
+        topAnchor =  graphView1.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0)
+        topAnchor?.isActive = true
+        bottomAnchor = graphView1.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0)
+        bottomAnchor?.isActive = true
+        leftAnchor = graphView1.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0)
+        leftAnchor?.isActive = true
+        widthAnchor = graphView1.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5, constant: -10)
+        widthAnchor?.isActive = true
+        
+        UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
+        graphView1.removeGestureRecognizer(tap1)
+        tap1 = UITapGestureRecognizer(target: self, action: #selector(didTap1))
+        graphView1.addGestureRecognizer(tap1)
+        tap2 = UITapGestureRecognizer(target: self, action: #selector(didTap2))
+        graphView2.addGestureRecognizer(tap2)
+        tap3 = UITapGestureRecognizer(target: self, action: #selector(didTap3))
+        graphView3.addGestureRecognizer(tap3)
+        tap4 = UITapGestureRecognizer(target: self, action: #selector(didTap4))
+        graphView4.addGestureRecognizer(tap4)
+    }
     
+    @objc func didTapAgain2() {
+        
+        widthAnchor2?.isActive = false
+        topAnchor2?.isActive = false
+        leftAnchor2?.isActive = false
+        bottomAnchor2?.isActive = false
+        rightAnchor2?.isActive = false
+        
+        topAnchor2 =  graphView2.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0)
+        topAnchor2?.isActive = true
+        bottomAnchor2 =  graphView2.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0)
+        bottomAnchor2?.isActive = true
+        rightAnchor2 = graphView2.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0)
+        rightAnchor2?.isActive = true
+        widthAnchor2 =  graphView2.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5, constant: -10)
+        widthAnchor2?.isActive = true
+        
+        
+        UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
+        graphView2.removeGestureRecognizer(tap2)
+        tap2 = UITapGestureRecognizer(target: self, action: #selector(didTap2))
+        graphView2.addGestureRecognizer(tap2)
+        tap1 = UITapGestureRecognizer(target: self, action: #selector(didTap1))
+        graphView1.addGestureRecognizer(tap1)
+        tap3 = UITapGestureRecognizer(target: self, action: #selector(didTap3))
+        graphView3.addGestureRecognizer(tap3)
+        tap4 = UITapGestureRecognizer(target: self, action: #selector(didTap4))
+        graphView4.addGestureRecognizer(tap4)
+    }
+    
+    @objc func didTapAgain3() {
+        
+        widthAnchor3?.isActive = false
+        topAnchor3?.isActive = false
+        leftAnchor3?.isActive = false
+        bottomAnchor3?.isActive = false
+        rightAnchor3?.isActive = false
+        
+        topAnchor3 =  graphView3.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0)
+        topAnchor3?.isActive = true
+        bottomAnchor3 = graphView3.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0)
+        bottomAnchor3?.isActive = true
+        leftAnchor3 = graphView3.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 0)
+        leftAnchor3?.isActive = true
+        widthAnchor3 = graphView3.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5, constant: -10)
+        widthAnchor3?.isActive = true
+        
+        UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
+        graphView3.removeGestureRecognizer(tap3)
+        tap3 = UITapGestureRecognizer(target: self, action: #selector(didTap3))
+        graphView3.addGestureRecognizer(tap3)
+        tap1 = UITapGestureRecognizer(target: self, action: #selector(didTap1))
+        graphView1.addGestureRecognizer(tap1)
+        tap2 = UITapGestureRecognizer(target: self, action: #selector(didTap2))
+        graphView2.addGestureRecognizer(tap2)
+        tap4 = UITapGestureRecognizer(target: self, action: #selector(didTap4))
+        graphView4.addGestureRecognizer(tap4)
+    }
+    
+    @objc func didTapAgain4() {
+        
+        widthAnchor4?.isActive = false
+        topAnchor4?.isActive = false
+        leftAnchor4?.isActive = false
+        bottomAnchor4?.isActive = false
+        rightAnchor4?.isActive = false
+        
+        topAnchor4 =  graphView4.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0)
+        topAnchor4?.isActive = true
+        bottomAnchor4 = graphView4.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0)
+        bottomAnchor4?.isActive = true
+        rightAnchor4 =  graphView4.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: 0)
+        rightAnchor4?.isActive = true
+        widthAnchor4 = graphView4.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5, constant: -10)
+        widthAnchor4?.isActive = true
+        
+    
+
+        UIView.animate(withDuration: 0.4, animations: {self.view.layoutIfNeeded()})
+        graphView4.removeGestureRecognizer(tap4)
+        tap4 = UITapGestureRecognizer(target: self, action: #selector(didTap4))
+        graphView4.addGestureRecognizer(tap4)
+        tap1 = UITapGestureRecognizer(target: self, action: #selector(didTap1))
+        graphView1.addGestureRecognizer(tap1)
+        tap2 = UITapGestureRecognizer(target: self, action: #selector(didTap2))
+        graphView2.addGestureRecognizer(tap2)
+        tap3 = UITapGestureRecognizer(target: self, action: #selector(didTap3))
+        graphView3.addGestureRecognizer(tap3)
+       
+    }
+        
+
     
     @objc func didTapAgain() {
-        print("johnny")
-        print("boog")
 //        graphView1.removeFromSuperview()
 //        graphView2.removeFromSuperview()
 //        graphView3.removeFromSuperview()
@@ -457,34 +568,35 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
 //        topContainer.sendSubview(toBack: graphView1)
        
         
-//        widthAnchor?.isActive = false
-//        topAnchor?.isActive = false
-//        leftAnchor?.isActive = false
-//        bottomAnchor?.isActive = false
-//        rightAnchor?.isActive = false
-//
-//        topAnchor =  graphView1.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0)
-//        topAnchor?.isActive = true
-//        bottomAnchor = graphView1.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0)
-//        bottomAnchor?.isActive = true
-//        leftAnchor = graphView1.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0)
-//        leftAnchor?.isActive = true
-//        widthAnchor = graphView1.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5)
-//        widthAnchor?.isActive = true
+        widthAnchor?.isActive = false
+        topAnchor?.isActive = false
+        leftAnchor?.isActive = false
+        bottomAnchor?.isActive = false
+        rightAnchor?.isActive = false
+
+        topAnchor =  graphView1.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0)
+        topAnchor?.isActive = true
+        bottomAnchor = graphView1.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0)
+        bottomAnchor?.isActive = true
+        leftAnchor = graphView1.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0)
+        leftAnchor?.isActive = true
+        widthAnchor = graphView1.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5)
+        widthAnchor?.isActive = true
         
-        widthAnchor32?.isActive = false
-        topAnchor32?.isActive = false
-        leftAnchor32?.isActive = false
-        bottomAnchor32?.isActive = false
-        rightAnchor32?.isActive = false
         
-        //topAnchor3 =  graphView3.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0)
+        widthAnchor3?.isActive = false
+        topAnchor3?.isActive = false
+        leftAnchor3?.isActive = false
+        bottomAnchor3?.isActive = false
+        rightAnchor3?.isActive = false
+        
+        topAnchor3 =  graphView3.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0)
         topAnchor3?.isActive = true
-       // bottomAnchor3 = graphView3.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0)
+        bottomAnchor3 = graphView3.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0)
         bottomAnchor3?.isActive = true
-       // leftAnchor3 = graphView3.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 0)
+        leftAnchor3 = graphView3.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 0)
         leftAnchor3?.isActive = true
-        //  widthAnchor3 = graphView3.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5)
+        widthAnchor3 = graphView3.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5)
         widthAnchor3?.isActive = true
         
         
@@ -503,13 +615,15 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-       // setupViews()
+       setupViews()
+        self.updateViewConstraints()
         UIView.animate(withDuration: 0.7, animations: {self.view.layoutIfNeeded()})
        
         //UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
     }
     @objc func rotated() {
-        
+        //setupViews()
+        //UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
 //        NSLayoutConstraint.deactivate([topStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
 //            bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)])
         
