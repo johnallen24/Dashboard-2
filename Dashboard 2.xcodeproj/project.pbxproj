@@ -18,6 +18,7 @@
 		ABBC774820A5F84700825365 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC774620A5F84700825365 /* KDCircularProgress.swift */; };
 		ABBC774C20A79D8B00825365 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC774B20A79D8B00825365 /* Extensions.swift */; };
 		ABBC774E20A9DAB100825365 /* SurfaceCoilController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */; };
+		ABBC775020AA257000825365 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBC774F20AA241500825365 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		ABBC774620A5F84700825365 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		ABBC774B20A79D8B00825365 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceCoilController.swift; sourceTree = "<group>"; };
+		ABBC774F20AA241500825365 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B19D281E05C588D7297C4936 /* Pods-Dashboard 2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dashboard 2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dashboard 2/Pods-Dashboard 2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -44,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABBC775020AA257000825365 /* AVFoundation.framework in Frameworks */,
 				6EC6BB282A3693838937AB88 /* Pods_Dashboard_2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +66,7 @@
 		716BD1BF35D0D055611FE943 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABBC774F20AA241500825365 /* AVFoundation.framework */,
 				79E2D9BF168E4B571F940CC5 /* Pods_Dashboard_2.framework */,
 			);
 			name = Frameworks;

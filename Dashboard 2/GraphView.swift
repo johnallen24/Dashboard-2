@@ -43,7 +43,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        self.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         
 //        horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#fe117c")
 //        horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
@@ -63,13 +63,13 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     override func willMove(toSuperview newSuperview: UIView?) {
         switch graphColor {
         case .blue:
-            pieChart.set(colors: colorWithHexString(hexString: "#02aab0"))
-            horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#02aab0")
-            horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#02aab0")
-            horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#02aab0").withAlphaComponent(0.2)
-            verticalProgressBar.barBorderColor = colorWithHexString(hexString: "#02aab0")
-            verticalProgressBar.barFillColor = colorWithHexString(hexString: "#02aab0")
-            verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#02aab0").withAlphaComponent(0.2)
+            pieChart.set(colors: colorWithHexString(hexString: "#3bc5e9"))
+            horizontalProgressBar.barBorderColor = colorWithHexString(hexString: "#3bc5e9")
+            horizontalProgressBar.barFillColor = colorWithHexString(hexString: "#3bc5e9")
+            horizontalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#3bc5e9").withAlphaComponent(0.2)
+            verticalProgressBar.barBorderColor = colorWithHexString(hexString: "#3bc5e9")
+            verticalProgressBar.barFillColor = colorWithHexString(hexString: "#3bc5e9")
+            verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#3bc5e9").withAlphaComponent(0.2)
             
         case .orange:
             pieChart.set(colors: colorWithHexString(hexString: "#fb594a"))
@@ -176,9 +176,11 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         self.addSubview(titleLabel)
         self.addSubview(topContainer)
         self.addSubview(bottomContainer)
+        self.addSubview(horizontalProgressBar)
+        
         topContainer.addSubview(chtChart)
-        topContainer.addSubview(pieChart)
-        bottomContainer.addSubview(horizontalProgressBar)
+        //topContainer.addSubview(pieChart)
+        bottomContainer.addSubview(pieChart)
         bottomContainer.addSubview(verticalProgressBar)
         self.addSubview(coverView)
         
@@ -187,12 +189,16 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
         titleLabel.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.12).isActive = true
         
+        titleLabel.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
+        
         
         horizontalProgressBar.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0).isActive = true
         horizontalProgressBar.heightAnchor.constraint(equalTo: bottomContainer.heightAnchor, multiplier: 0.08).isActive = true
         horizontalProgressBar.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 0).isActive = true
         horizontalProgressBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
-        
+        horizontalProgressBar.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
+        horizontalProgressBar.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
+
         
         topContainer.topAnchor.constraint(equalTo: horizontalProgressBar.bottomAnchor, constant: 0).isActive = true
         topContainer.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
@@ -203,6 +209,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         bottomContainer.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
         bottomContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
         bottomContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+         bottomContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         
         
         chtChart.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0).isActive = true
@@ -210,23 +217,22 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         chtChart.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0).isActive = true
         chtChart.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0).isActive = true
         chtChart.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0).isActive = true
-        chtChart.backgroundColor = UIColor.white
+        chtChart.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         
         
         pieChart.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
         pieChart.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0).isActive = true
         pieChart.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant:50).isActive = true
         pieChart.widthAnchor.constraint(equalTo: bottomContainer.heightAnchor, multiplier: 1).isActive = true
-        
-        pieChart.backgroundColor = UIColor.white
-        
+       // pieChart.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
+
         
         
         verticalProgressBar.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
         verticalProgressBar.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0).isActive = true
         verticalProgressBar.leadingAnchor.constraint(equalTo: pieChart.trailingAnchor, constant: 0).isActive = true
         verticalProgressBar.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: 0).isActive = true
-        //verticalProgressBar.barMaxHeight = bottomContainer.bounds.height
+       verticalProgressBar.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         
         
         coverView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
@@ -304,8 +310,8 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         let gradientColors: CFArray
         switch graphColor {
         case .blue:
-             gradientColors = [colorWithHexString(hexString: "#00cdac").cgColor, colorWithHexString(hexString: "#02aab0").cgColor] as CFArray
-            chartDataSet.colors = [colorWithHexString(hexString: "#00cdac")]
+             gradientColors = [colorWithHexString(hexString: "#22d5d6").cgColor, colorWithHexString(hexString: "#3bc5e9").cgColor] as CFArray
+            chartDataSet.colors = [colorWithHexString(hexString: "#22d5d6")]
             
         case .orange:
              gradientColors = [colorWithHexString(hexString: "#fd9d32").cgColor, colorWithHexString(hexString: "#fb594a").cgColor] as CFArray
