@@ -52,7 +52,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
 //        verticalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
 //        verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
 //        pieChart.set(colors: colorWithHexString(hexString: "#fe117c"))
-        var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        //var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         setupViews()
     }
     
@@ -101,7 +101,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     
     let titleLabel: UITextView = {
         let textView = UITextView()
-        textView.text = "Voltage"
+        textView.text = ""
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.textAlignment = .center
         textView.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 32)
@@ -257,12 +257,12 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         case battery
     }
     
-     var graphColor: colors = .pink
+    var graphColor: colors = .pink
     var graphName: names = .voltage
     
-    @objc func update() {
+    @objc func update(number: Double) {
         
-        let number = Double(arc4random_uniform(5)) + Double(Float(arc4random()) / Float(UINT32_MAX)).rounded(toPlaces: 2)
+        //let number = Double(arc4random_uniform(5)) + Double(Float(arc4random()) / Float(UINT32_MAX)).rounded(toPlaces: 2)
         
         if graphName == .voltage {
             titleLabel.text = "Voltage: \(number)"
@@ -273,8 +273,9 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         }
         
         
-        let percentage = number / 5.0
+        let percentage = number/100.0
         let angle = percentage * 360
+        
         pieChart.animate(toAngle: angle, duration: 0.75, completion: nil)
         horizontalProgressBar.animateTo(progress: CGFloat(percentage))
         verticalProgressBar.animateTo(progress: CGFloat(percentage))

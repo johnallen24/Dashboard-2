@@ -7,9 +7,13 @@
 //
 
 import UIKit
-
+import MultipeerConnectivity
 
 class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
+    
+    var peerID: MCPeerID!
+    var mcSession: MCSession!
+    var mcAdvertiserAssistant: MCAdvertiserAssistant!
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -51,6 +55,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .battery
         view.backgroundColor = UIColor.white
+        view.titleLabel.text = "Battery Level: ..."
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
@@ -64,6 +69,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .voltage
         view.backgroundColor = UIColor.white
+        view.titleLabel.text = "Voltage: ..."
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
@@ -77,6 +83,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .battery
         view.backgroundColor = UIColor.white
+        view.titleLabel.text = "Battery Level: ..."
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
@@ -90,6 +97,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .voltage
         view.backgroundColor = UIColor.white
+        view.titleLabel.text = "Voltage: ..."
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
@@ -110,6 +118,15 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         return view
     }()
     
+    let phoneConnectButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Connect to Iphone", for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.textColor = UIColor.black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(showConnectivity), for: .touchUpInside)
+        return button
+    }()
     
     var tap1: UITapGestureRecognizer!
     var tap2: UITapGestureRecognizer!
@@ -126,17 +143,20 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     var bottomStackView: UIStackView!
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        effect = visualEffectView.effect
-        visualEffectView.effect = nil
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-        view.backgroundColor = colorWithHexString(hexString: "#eaf3f9") //f0f0f0 4d4b4e e3e3e5
-        //view.setGradientBackground(colorOne: colorWithHexString(hexString: "f0f0f0"), colorTwo: colorWithHexString(hexString: "4d4b4e"))
-        setupViews()
-    }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        
+//        effect = visualEffectView.effect
+//        visualEffectView.effect = nil
+//        
+//        peerID = MCPeerID(displayName: UIDevice.current.name)
+//        mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
+//        mcSession.delegate = self
+//        
+//        view.backgroundColor = colorWithHexString(hexString: "#eaf3f9") //f0f0f0 4d4b4e e3e3e5
+//        //view.setGradientBackground(colorOne: colorWithHexString(hexString: "f0f0f0"), colorTwo: colorWithHexString(hexString: "4d4b4e"))
+//        initialSetup()
+//    }
     
     
     var topAnchor: NSLayoutConstraint?
@@ -163,7 +183,89 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     var rightAnchor4: NSLayoutConstraint?
     var widthAnchor4: NSLayoutConstraint?
     
+    func initialSetup() {
+        
+        
+        view.addSubview(topContainer)
+        view.addSubview(bottomContainer)
+        topContainer.addSubview(phoneConnectButton)
+        
+        NSLayoutConstraint.activate([
+            topContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+            topContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            topContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            topContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5, constant: -((self.tabBarController?.tabBar.frame.size.height)! + 40)),
+            // topContainer.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)
+            ])
+        
+        NSLayoutConstraint.activate([
+            bottomContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            bottomContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            bottomContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5, constant: -((self.tabBarController?.tabBar.frame.size.height)! + 40)),
+            //bottomContainer.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
+            bottomContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
+            //bottomStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 40),
+            ])
+        
+        
+        phoneConnectButton.centerXAnchor.constraint(equalTo: topContainer.centerXAnchor, constant: 0).isActive = true
+        phoneConnectButton.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor, constant:0).isActive = true
+        phoneConnectButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        phoneConnectButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        phoneConnectButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 25)
+        phoneConnectButton.layer.borderWidth = 1
+        phoneConnectButton.layer.borderColor = UIColor.black.cgColor
+        
+        
+        phoneConnectButton.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        phoneConnectButton.setTitleColor(UIColor.black, for: .normal)
+        phoneConnectButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 100)
+        phoneConnectButton.titleLabel?.numberOfLines = 1
+        phoneConnectButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        phoneConnectButton.titleLabel?.baselineAdjustment = .alignCenters
+        phoneConnectButton.layer.cornerRadius = 25
+        
+    }
     
+    
+    func setupTopContainer() {
+        
+        phoneConnectButton.removeFromSuperview()
+        
+        topContainer.addSubview(graphView1)
+        topContainer.addSubview(graphView2)
+        
+        topContainer.alpha = 0
+        bottomContainer.alpha = 0
+        
+        tap1 = UITapGestureRecognizer(target: self, action: #selector(didTap1))
+        tap2 = UITapGestureRecognizer(target: self, action: #selector(didTap2))
+        graphView1.addGestureRecognizer(tap1)
+        graphView2.addGestureRecognizer(tap2)
+        
+        topAnchor =  graphView1.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0)
+        topAnchor?.isActive = true
+        bottomAnchor = graphView1.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0)
+        bottomAnchor?.isActive = true
+        leftAnchor = graphView1.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0)
+        leftAnchor?.isActive = true
+        widthAnchor = graphView1.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5, constant: -10)
+        widthAnchor?.isActive = true
+        
+        
+        topAnchor2 =  graphView2.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0)
+        topAnchor2?.isActive = true
+        bottomAnchor2 =  graphView2.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0)
+        bottomAnchor2?.isActive = true
+        rightAnchor2 = graphView2.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0)
+        rightAnchor2?.isActive = true
+        widthAnchor2 =  graphView2.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5, constant: -10)
+        widthAnchor2?.isActive = true
+        
+        UIView.animate(withDuration: 0.4,
+                       animations: { self.topContainer.alpha = 1
+            self.bottomContainer.alpha = 1})
+    }
     
     func setupViews() {
         
@@ -796,58 +898,6 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         UIView.animate(withDuration: 0.7, animations: {self.view.layoutIfNeeded()})
        
         //UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-    }
-    @objc func rotated() {
-        //setupViews()
-        //UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-//        NSLayoutConstraint.deactivate([topStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
-//            bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)])
-        
-//        graphView1.removeFromSuperview()
-//        graphView2.removeFromSuperview()
-//        graphView3.removeFromSuperview()
-//        graphView4.removeFromSuperview()
-//
-//        topStackView.removeFromSuperview()
-//        bottomStackView.removeFromSuperview()
-        
-        
-        
-//
-//        NSLayoutConstraint.deactivate([
-//              topStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-//            topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            topStackView.heightAnchor.constraint(equalToConstant: (oldHeight/2) - 60)
-//            ])
-//
-//        NSLayoutConstraint.deactivate([
-//            bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            bottomStackView.heightAnchor.constraint(equalToConstant: (oldHeight/2) - 60),
-//            bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40)])
-        
-//        oldHeight = newViewHeight
-//        NSLayoutConstraint.activate([
-//            topStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-//            topStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            topStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            topStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60)
-//            ])
-//
-//
-//        NSLayoutConstraint.activate([
-//            bottomStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            bottomStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//             bottomStackView.heightAnchor.constraint(equalToConstant: (newViewHeight/2) - 60),
-//            bottomStackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -40),
-        
-            //bottomStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 40),
-           
-           // ])
-        
-        
-        print("hey")
     }
     
     
