@@ -11,7 +11,7 @@ import MultipeerConnectivity
 
 extension dashBoardController: MCSessionDelegate, MCBrowserViewControllerDelegate {
     
-    
+   
     
     @IBAction func showConnectivity(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: "Battery Level Exchange" , message: "Do you want to host or join a session?", preferredStyle: .actionSheet)

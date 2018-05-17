@@ -35,7 +35,7 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
             return UIScreen.main.bounds.height - tabBarHeight!
         }
     }
-    
+    var alternate = true
     
     var newView: UIView!
     
@@ -52,10 +52,11 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     let graphView1: GraphView = {
         let view = GraphView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        //view.translatesAutoresizingMaskIntoConstraints = false
+        view.tag = 1
         view.graphName = .battery
         view.backgroundColor = UIColor.white
-        view.titleLabel.text = "Battery Level: ..."
+        view.titleLabel.text = "Iphone Battery Level: ..."
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
@@ -66,10 +67,10 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     let graphView2: GraphView = {
         let view = GraphView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        //view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .voltage
         view.backgroundColor = UIColor.white
-        view.titleLabel.text = "Voltage: ..."
+        view.titleLabel.text = "Iphone Voltage: ..."
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
@@ -80,10 +81,10 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     let graphView3: GraphView = {
         let view = GraphView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+       // view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .battery
         view.backgroundColor = UIColor.white
-        view.titleLabel.text = "Battery Level: ..."
+        view.titleLabel.text = "Wearable Battery Level: ..."
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
@@ -94,15 +95,28 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     let graphView4: GraphView = {
         let view = GraphView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        //view.translatesAutoresizingMaskIntoConstraints = false
         view.graphName = .voltage
         view.backgroundColor = UIColor.white
-        view.titleLabel.text = "Voltage: ..."
+        view.titleLabel.text = "Wearable Voltage: ..."
         view.layer.cornerRadius = 25
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
         view.graphColor = .purple
+        return view
+    }()
+    
+    
+    let overviewContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let singleContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -113,6 +127,30 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     }()
     
     let bottomContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let topLeftContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let topRightContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let bottomLeftContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let bottomRightContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -145,6 +183,9 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
+//        
+//    
+//
 //        
 //        effect = visualEffectView.effect
 //        visualEffectView.effect = nil
@@ -892,13 +933,13 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         
         }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-       setupViews()
-        self.updateViewConstraints()
-        UIView.animate(withDuration: 0.7, animations: {self.view.layoutIfNeeded()})
-       
-        //UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-    }
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//       setupViews()
+//        self.updateViewConstraints()
+//        UIView.animate(withDuration: 0.7, animations: {self.view.layoutIfNeeded()})
+//
+//        //UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+//    }
     
     
     
