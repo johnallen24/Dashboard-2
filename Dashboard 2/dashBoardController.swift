@@ -15,6 +15,8 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     var mcSession: MCSession!
     var mcAdvertiserAssistant: MCAdvertiserAssistant!
     
+    var graphColors: [GraphView.colors] = [.blue, .orange, .pink, .purple]
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }

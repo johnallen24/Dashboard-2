@@ -9,7 +9,11 @@
 import UIKit
 
 
-class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataSource, CustomCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataSource, CustomCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource, PickerCellDelegate{
+    
+    
+    
+    
     
     let tableView: UITableView = {
         let view = UITableView(frame: CGRect.zero, style: UITableViewStyle.grouped)
@@ -80,6 +84,7 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func switchChanged(cell: switchCell) {
+        print("hwq")
         let indexPath = self.tableView.indexPathForRow(at: cell.center)!
         let section = indexPath.section
         if cell.switchButton.isOn {
@@ -101,89 +106,29 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
         updateDashboard()
     }
     
+    //var colorsArray = [
+    
     func updateDashboard()
     {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateDashboard"), object: nil)
     }
     
-    static var viewsArray: [Int] = [1,2,3,4]
-    
-    
-    
-    var insertionIndexPath: IndexPath?
-
-    
-//    func updateInsertionIndexPaths() {
-//
-//
-//        var cells = [UITableViewCell]()
-//        // assuming tableView is your self.tableView defined somewhere
-//        for i in 0...tableView.numberOfSections-1
-//        {
-//            for j in 0...tableView.numberOfRows(inSection: i)-1
-//            {
-//                if let cell = tableView.cellForRow(at: IndexPath(row: j, section: i))
-//                {
-//                    if cell is actualPickerCell
-//                    {
-//                        let pickerCell = cell as! actualPickerCell
-//                        insertionIndexPaths.append(pickerCell)
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//        insertionIndexPaths = []
-//        for cell in cells
-//        {
-//            if cell is actualPickerCell
-//            {
-//
-//                let pickerCell = cell as! actualPickerCell
-//                insertionIndexPaths.append(pickerCell)
-//            }
-//            else {
-//
-//            }
-//        }
-//
-//    }
-    
-     func updateInsertionIndexPaths() {
-        
-        
-        
+    func pickerChanged(cell: actualPickerCell) {
+        print("tom")
+        let pickerRow = cell.pickerView.selectedRow(inComponent: 0)
+        let indexPath = self.tableView.indexPathForRow(at: cell.center)!
+        if (indexPath.row == 3) {
+        let section = indexPath.section
+        OptionsController.viewsColorsArray[section] = pickerRow
+        updateDashboard()
+        }
     }
     
-    var alreadyHasSelection: [Bool] = [false, false, false ,false]
+    static var viewsArray: [Int] = [1,2,3,4]
     
-//    var alreadyHasSelection: [Bool] {   //= [false, false, false ,false]
-//        get {
-//            var array: [Bool] = [false, false, false ,false]
-//            for path in insertionIndexPaths
-//            {
-//                if path.section == 0
-//                {
-//                    array[0] = true
-//                }
-//                if path.section == 1
-//                {
-//                    array[1] = true
-//                }
-//                if path.section == 2
-//                {
-//                    array[2] = true
-//                }
-//                if path.section == 3
-//                {
-//                    array[3] = true
-//                }
-//            }
-//            return array
-//        }
-//
-//    }
+    static var viewsColorsArray = [0,1,2,3]
+
+    var insertionIndexPath: IndexPath?
     
     
     func deleteRow(at _path: IndexPath) {
@@ -213,7 +158,7 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
+       
         
         if let path = insertionIndexPath {
             
@@ -235,6 +180,7 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
                 tableView.beginUpdates()
                 deleteRow(at: path)
                 tableView.endUpdates()
+                tableView.deselectRow(at: indexPath, animated: true)
             }
                 
             else {
@@ -314,88 +260,7 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         
     }
-//        switch indexPath.section {
-//        case 0:
-//             var i = 0
-//             for path in insertionIndexPaths
-//             {
-//                if path.section == 0
-//                {
-//
-//                    if (path.row == (1 + indexPath.row))
-//                    {
-//                    numRowsS0 = numRowsS0 - 1
-//                    insertionIndexPaths.remove(at: i)
-//                    let cell = tableView.cellForRow(at: path) as! actualPickerCell
-//                    cell.pickerView.isHidden = true
-//                    deleteRow(at: path)
-//                    alreadyHasSelection[0] = false
-//                    return
-//                    }
-//                    else
-//                    {
-//                     alreadyHasSelection[0] = true
-//                    //if indexPath.row < path.row
-//
-//                    numRowsS0 = numRowsS0 - 1
-//                    tableView.beginUpdates()
-//                    tableView.deleteRows(at: [path], with: .automatic)
-//                    insertionIndexPaths.remove(at: i)
-//                    tableView.endUpdates()
-//                    numRowsS0 = numRowsS0 + 1
-//                    tableView.beginUpdates()
-//                    let insertionRow = indexPath.row + 1
-//                    let insertionSection = indexPath.section
-//                    let insertionPath = IndexPath(row: insertionRow, section: insertionSection)
-//                    insertionIndexPaths.append(insertionPath)
-//                    tableView.insertRows(at: [insertionPath], with: .automatic)
-//                    tableView.endUpdates()
-//                    }
-//                }
-//                i = i + 1
-//             }
-//             if alreadyHasSelection[0] == false
-//             {
-//                numRowsS0 = numRowsS0 + 1
-//                tableView.beginUpdates()
-//
-//                let insertionRow = indexPath.row + 1
-//                let insertionSection = indexPath.section
-//                let insertionPath = IndexPath(row: insertionRow, section: insertionSection)
-//                insertionIndexPaths.append(insertionPath)
-//                tableView.insertRows(at: [insertionPath], with: .automatic)
-//                tableView.endUpdates()
-//                alreadyHasSelection[0] = true
-//             }
-//        default:
-//            break
-//        }
-    
-             //print(insertionIndexPaths)
-//             numRowsS0 = numRowsS0 + 1
-//             if alreadyHasSelection[0] == true
-//             {
-//
-//             }
-//        case 1:
-//            numRowsS1 = numRowsS1 + 1
-//        case 2:
-//            numRowsS2 = numRowsS2 + 1
-//        case 3:
-//            numRowsS3 = numRowsS3 + 1
-//        default:
-//            break
-//        }
-//
-//        let insertionRow = indexPath.row + 1
-//        let insertionSection = indexPath.section
-//        let insertionPath = IndexPath(row: insertionRow, section: insertionSection)
-//        insertionIndexPaths.append(insertionPath)
-//        tableView.beginUpdates()
-//        tableView.insertRows(at: [insertionPath], with: .automatic)
-//        tableView.endUpdates()
-        
-//    }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -404,7 +269,7 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
         {
             if path == indexPath
             {
-                return 100
+                return 150
             }
        
         }
@@ -518,7 +383,15 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
             
             if path == indexPath {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cell3") as! actualPickerCell
+                cell.delegate = self
+                if indexPath.row == 2 {
+                cell.type = .graph
                 return cell
+                }
+                if indexPath.row == 3{
+                cell.type = .color
+                return cell
+                }
             }
             
         }

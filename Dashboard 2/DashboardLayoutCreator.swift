@@ -127,9 +127,13 @@ extension dashBoardController {
         graphView4.removeFromSuperview()
     }
     
-    
-    
+
     @objc func updateDashboard(notification: Notification?) {
+        
+         graphView1.graphColor = graphColors[OptionsController.viewsColorsArray[0]]
+         graphView2.graphColor = graphColors[OptionsController.viewsColorsArray[1]]
+         graphView3.graphColor = graphColors[OptionsController.viewsColorsArray[2]]
+         graphView4.graphColor = graphColors[OptionsController.viewsColorsArray[3]]
         
         var graphViews: [GraphView] = []
         
