@@ -110,8 +110,9 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     
-    var insertionIndexPaths: [IndexPath] = []
+    var insertionIndexPath: IndexPath?
 
+    
 //    func updateInsertionIndexPaths() {
 //
 //
@@ -186,80 +187,191 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     func deleteRow(at _path: IndexPath) {
-        tableView.beginUpdates()
+        
         tableView.deleteRows(at: [_path], with: .automatic)
-        tableView.endUpdates()
+        insertionIndexPath = nil
     }
     
-//    func addRow(at _path: IndexPath) {
-//        tableView.beginUpdates()
-//        let
-//        tableView.insertRows(at: [_path], with: .automatic)
-//        tableView.endUpdates()
-//    }
+    func addRow(at _path: IndexPath, withExtra: Bool) {
+        
+        if withExtra {
+            let row = _path.row + 1
+            let section = _path.section
+            let path = IndexPath(row: row, section: section)
+            tableView.insertRows(at: [path], with: .automatic)
+            insertionIndexPath = path
+        }
+        else {
+           
+            tableView.insertRows(at: [_path], with: .automatic)
+            insertionIndexPath = _path
+        }
+        
+    }
     
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        switch indexPath.section {
-        case 0:
-             var i = 0
-             for path in insertionIndexPaths
-             {
-                if path.section == 0
-                {
-                    
-                    if (path.row == (1 + indexPath.row))
-                    {
+        
+        
+        if let path = insertionIndexPath {
+            
+            
+            if (path.row == (1 + indexPath.row) && path.section == indexPath.section)
+            {
+                switch indexPath.section {
+                case 0:
                     numRowsS0 = numRowsS0 - 1
-                    insertionIndexPaths.remove(at: i)
-                    let cell = tableView.cellForRow(at: path) as! actualPickerCell
-                    cell.pickerView.isHidden = true
-                    deleteRow(at: path)
-                    alreadyHasSelection[0] = false
-                    return
-                    }
-                    else
-                    {
-                     alreadyHasSelection[0] = true
-                    //if indexPath.row < path.row
-                   
+                case 1:
+                    numRowsS1 = numRowsS1 - 1
+                case 2:
+                    numRowsS2 = numRowsS2 - 1
+                case 3:
+                    numRowsS3 = numRowsS3 - 1
+                default:
+                    break
+                }
+                tableView.beginUpdates()
+                deleteRow(at: path)
+                tableView.endUpdates()
+            }
+                
+            else {
+                
+                switch path.section {
+                case 0:
+                    print("joe")
                     numRowsS0 = numRowsS0 - 1
-                    tableView.beginUpdates()
-                    tableView.deleteRows(at: [path], with: .automatic)
-                    insertionIndexPaths.remove(at: i)
-                    tableView.endUpdates()
+                case 1:
+                    numRowsS1 = numRowsS1 - 1
+                case 2:
+                    numRowsS2 = numRowsS2 - 1
+                case 3:
+                    numRowsS3 = numRowsS3 - 1
+                default:
+                    break
+                }
+                
+                switch indexPath.section {
+                case 0:
                     numRowsS0 = numRowsS0 + 1
+                case 1:
+                    numRowsS1 = numRowsS1 + 1
+                case 2:
+                    numRowsS2 = numRowsS2 + 1
+                case 3:
+                    numRowsS3 = numRowsS3 + 1
+                default:
+                    break
+                }
+                
+                if indexPath.section == path.section {
+                if  indexPath.row > path.row {
                     tableView.beginUpdates()
-                    let insertionRow = indexPath.row + 1
-                    let insertionSection = indexPath.section
-                    let insertionPath = IndexPath(row: insertionRow, section: insertionSection)
-                    insertionIndexPaths.append(insertionPath)
-                    tableView.insertRows(at: [insertionPath], with: .automatic)
+                    deleteRow(at: path)
+                    addRow(at: indexPath, withExtra: false)
+                    tableView.endUpdates()
+                    
+                }
+                else {
+                    tableView.beginUpdates()
+                    deleteRow(at: path)
+                    addRow(at: indexPath, withExtra: true)
                     tableView.endUpdates()
                     }
                 }
-                i = i + 1
-             }
-             if alreadyHasSelection[0] == false
-             {
-                numRowsS0 = numRowsS0 + 1
-                tableView.beginUpdates()
-            
-                let insertionRow = indexPath.row + 1
-                let insertionSection = indexPath.section
-                let insertionPath = IndexPath(row: insertionRow, section: insertionSection)
-                insertionIndexPaths.append(insertionPath)
-                tableView.insertRows(at: [insertionPath], with: .automatic)
-                tableView.endUpdates()
-                alreadyHasSelection[0] = true
-             }
-        default:
-            break
+                else {
+                    print("bob")
+                    tableView.beginUpdates()
+                    deleteRow(at: path)
+                    addRow(at: indexPath, withExtra: true)
+                    tableView.endUpdates()
+                }
+                
+                
+                
+            }
         }
+            
+        else {
+            switch indexPath.section {
+            case 0:
+                numRowsS0 = numRowsS0 + 1
+            case 1:
+                numRowsS1 = numRowsS1 + 1
+            case 2:
+                numRowsS2 = numRowsS2 + 1
+            case 3:
+                numRowsS3 = numRowsS3 + 1
+            default:
+                break
+            }
+            tableView.beginUpdates()
+            addRow(at: indexPath, withExtra: true)
+            tableView.endUpdates()
+            
+        }
+        
+    }
+//        switch indexPath.section {
+//        case 0:
+//             var i = 0
+//             for path in insertionIndexPaths
+//             {
+//                if path.section == 0
+//                {
+//
+//                    if (path.row == (1 + indexPath.row))
+//                    {
+//                    numRowsS0 = numRowsS0 - 1
+//                    insertionIndexPaths.remove(at: i)
+//                    let cell = tableView.cellForRow(at: path) as! actualPickerCell
+//                    cell.pickerView.isHidden = true
+//                    deleteRow(at: path)
+//                    alreadyHasSelection[0] = false
+//                    return
+//                    }
+//                    else
+//                    {
+//                     alreadyHasSelection[0] = true
+//                    //if indexPath.row < path.row
+//
+//                    numRowsS0 = numRowsS0 - 1
+//                    tableView.beginUpdates()
+//                    tableView.deleteRows(at: [path], with: .automatic)
+//                    insertionIndexPaths.remove(at: i)
+//                    tableView.endUpdates()
+//                    numRowsS0 = numRowsS0 + 1
+//                    tableView.beginUpdates()
+//                    let insertionRow = indexPath.row + 1
+//                    let insertionSection = indexPath.section
+//                    let insertionPath = IndexPath(row: insertionRow, section: insertionSection)
+//                    insertionIndexPaths.append(insertionPath)
+//                    tableView.insertRows(at: [insertionPath], with: .automatic)
+//                    tableView.endUpdates()
+//                    }
+//                }
+//                i = i + 1
+//             }
+//             if alreadyHasSelection[0] == false
+//             {
+//                numRowsS0 = numRowsS0 + 1
+//                tableView.beginUpdates()
+//
+//                let insertionRow = indexPath.row + 1
+//                let insertionSection = indexPath.section
+//                let insertionPath = IndexPath(row: insertionRow, section: insertionSection)
+//                insertionIndexPaths.append(insertionPath)
+//                tableView.insertRows(at: [insertionPath], with: .automatic)
+//                tableView.endUpdates()
+//                alreadyHasSelection[0] = true
+//             }
+//        default:
+//            break
+//        }
     
-             print(insertionIndexPaths)
+             //print(insertionIndexPaths)
 //             numRowsS0 = numRowsS0 + 1
 //             if alreadyHasSelection[0] == true
 //             {
@@ -283,29 +395,32 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
 //        tableView.insertRows(at: [insertionPath], with: .automatic)
 //        tableView.endUpdates()
         
-    }
+//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        for path in insertionIndexPaths
+        
+        if let path = insertionIndexPath
         {
             if path == indexPath
-                {
-                    return 100
-                }
-        }
+            {
+                return 100
+            }
        
+        }
         return 50
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         print("hello")
-        for path in insertionIndexPaths
+        
+        if let path = insertionIndexPath
         {
             if path == indexPath
             {
                 return nil
             }
+            
         }
         
         if (indexPath.row != 0)
@@ -397,14 +512,15 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        for path in insertionIndexPaths
-        {
-            if path == indexPath
-            {
-                print("picker")
+        
+        
+        if let path = insertionIndexPath {
+            
+            if path == indexPath {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cell3") as! actualPickerCell
                 return cell
             }
+            
         }
         
         if (indexPath.row == 0)
