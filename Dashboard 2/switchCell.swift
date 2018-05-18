@@ -64,6 +64,7 @@ class switchCell: UITableViewCell {
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5)
             ])
         
+        self.selectionStyle = .none
     }
     
     required init?(coder aDecoder: NSCoder) {

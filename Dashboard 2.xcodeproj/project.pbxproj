@@ -12,8 +12,8 @@
 		AB0EDB5A20ABDFEA00BC25C0 /* DashboardLayoutCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0EDB5920ABDFEA00BC25C0 /* DashboardLayoutCreator.swift */; };
 		AB0EDB5C20AC90E700BC25C0 /* OptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0EDB5B20AC90E600BC25C0 /* OptionsController.swift */; };
 		AB0EDB5E20AC951500BC25C0 /* switchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0EDB5D20AC951500BC25C0 /* switchCell.swift */; };
-		AB0EDB6020ACB4B900BC25C0 /* OptionsController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0EDB5F20ACB4B900BC25C0 /* OptionsController2.swift */; };
 		AB161F1820ACE90800B53105 /* pickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB161F1720ACE90800B53105 /* pickerCell.swift */; };
+		AB161F1A20AE388B00B53105 /* actualPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB161F1920AE388B00B53105 /* actualPickerCell.swift */; };
 		ABBC772D20A5F73000825365 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC772C20A5F73000825365 /* AppDelegate.swift */; };
 		ABBC772F20A5F73000825365 /* dashBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC772E20A5F73000825365 /* dashBoardController.swift */; };
 		ABBC773220A5F73000825365 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABBC773020A5F73000825365 /* Main.storyboard */; };
@@ -34,8 +34,8 @@
 		AB0EDB5920ABDFEA00BC25C0 /* DashboardLayoutCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardLayoutCreator.swift; sourceTree = "<group>"; };
 		AB0EDB5B20AC90E600BC25C0 /* OptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsController.swift; sourceTree = "<group>"; };
 		AB0EDB5D20AC951500BC25C0 /* switchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = switchCell.swift; sourceTree = "<group>"; };
-		AB0EDB5F20ACB4B900BC25C0 /* OptionsController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsController2.swift; sourceTree = "<group>"; };
 		AB161F1720ACE90800B53105 /* pickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pickerCell.swift; sourceTree = "<group>"; };
+		AB161F1920AE388B00B53105 /* actualPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actualPickerCell.swift; sourceTree = "<group>"; };
 		ABBC772920A5F73000825365 /* Dashboard 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dashboard 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBC772C20A5F73000825365 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABBC772E20A5F73000825365 /* dashBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dashBoardController.swift; sourceTree = "<group>"; };
@@ -111,9 +111,9 @@
 				ABBC772E20A5F73000825365 /* dashBoardController.swift */,
 				AB0EDB5920ABDFEA00BC25C0 /* DashboardLayoutCreator.swift */,
 				AB0EDB5B20AC90E600BC25C0 /* OptionsController.swift */,
-				AB0EDB5F20ACB4B900BC25C0 /* OptionsController2.swift */,
 				AB0EDB5D20AC951500BC25C0 /* switchCell.swift */,
 				AB161F1720ACE90800B53105 /* pickerCell.swift */,
+				AB161F1920AE388B00B53105 /* actualPickerCell.swift */,
 				ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */,
 				ABBC773E20A5F7D700825365 /* GraphView.swift */,
 				ABBC774B20A79D8B00825365 /* Extensions.swift */,
@@ -276,10 +276,10 @@
 				ABBC774820A5F84700825365 /* KDCircularProgress.swift in Sources */,
 				ABBC772F20A5F73000825365 /* dashBoardController.swift in Sources */,
 				AB0EDB5A20ABDFEA00BC25C0 /* DashboardLayoutCreator.swift in Sources */,
+				AB161F1A20AE388B00B53105 /* actualPickerCell.swift in Sources */,
 				ABBC772D20A5F73000825365 /* AppDelegate.swift in Sources */,
 				ABBC773F20A5F7D700825365 /* GraphView.swift in Sources */,
 				AB0EDB5E20AC951500BC25C0 /* switchCell.swift in Sources */,
-				AB0EDB6020ACB4B900BC25C0 /* OptionsController2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

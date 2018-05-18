@@ -52,7 +52,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
 //        verticalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
 //        verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
 //        pieChart.set(colors: colorWithHexString(hexString: "#fe117c"))
-        var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+//        var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         setupViews()
     }
     
@@ -262,7 +262,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     
     @objc func update(number: Double) {
         
-        let number = Double(arc4random_uniform(5)) + Double(Float(arc4random()) / Float(UINT32_MAX)).rounded(toPlaces: 2)
+//        let number = Double(arc4random_uniform(5)) + Double(Float(arc4random()) / Float(UINT32_MAX)).rounded(toPlaces: 2)
         
         if graphName == .voltage {
             titleLabel.text = "Voltage: \(number)"
@@ -273,7 +273,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         }
         
         
-        let percentage = number/5
+        let percentage = number/100
         let angle = percentage * 360
         
         pieChart.animate(toAngle: angle, duration: 0.75, completion: nil)
