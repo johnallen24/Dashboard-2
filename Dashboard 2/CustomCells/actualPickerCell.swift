@@ -72,12 +72,15 @@ class actualPickerCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataS
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 4
+        if self.type == .color {
+            return 4
+        }
+        return 6
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "hey" 
-    }
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return "hey"
+//    }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("mo")
@@ -89,15 +92,15 @@ class actualPickerCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataS
         return 50
     }
     
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        return 400
-    }
-    
+//    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+//        return 400
+//    }
+//
     var pickerWidth = 400
     var pickerHeight = 100
     var colorNames = ["Blue", "Orange", "Pink", "Purple"]
     var colorImages = [UIImage(named: "blue"),UIImage(named: "orange"),UIImage(named: "pink"),UIImage(named: "purple")]
-    var graphTypeNames = ["Line Chart with Area", "Line Chart", "Bar Chart", "Step Chart"]
+    var graphTypeNames = ["Cublic Line with Area", "Cublic Line", "Linear Line with Area", "Linear Line" ,"Bar Chart", "Step Chart"]
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         

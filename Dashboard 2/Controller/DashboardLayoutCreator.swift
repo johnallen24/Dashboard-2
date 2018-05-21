@@ -129,11 +129,19 @@ extension dashBoardController {
     
 
     @objc func updateDashboard(notification: Notification?) {
+        print("dillion")
         
-         graphView1.graphColor = graphColors[OptionsController.viewsColorsArray[0]]
-         graphView2.graphColor = graphColors[OptionsController.viewsColorsArray[1]]
-         graphView3.graphColor = graphColors[OptionsController.viewsColorsArray[2]]
-         graphView4.graphColor = graphColors[OptionsController.viewsColorsArray[3]]
+        print(OptionsController.viewsGraphTypes)
+         graphView1.graphColor = graphColorsDecoder[OptionsController.viewsColorsArray[0]]
+         graphView2.graphColor = graphColorsDecoder[OptionsController.viewsColorsArray[1]]
+         graphView3.graphColor = graphColorsDecoder[OptionsController.viewsColorsArray[2]]
+         graphView4.graphColor = graphColorsDecoder[OptionsController.viewsColorsArray[3]]
+        
+         graphView1.type = graphTypesDecoder[OptionsController.viewsGraphTypes[0]]
+         graphView2.type = graphTypesDecoder[OptionsController.viewsGraphTypes[1]]
+         graphView3.type = graphTypesDecoder[OptionsController.viewsGraphTypes[2]]
+         graphView4.type = graphTypesDecoder[OptionsController.viewsGraphTypes[3]]
+        
         
         var graphViews: [GraphView] = []
         

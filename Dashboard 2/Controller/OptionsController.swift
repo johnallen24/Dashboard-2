@@ -117,6 +117,13 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
         print("tom")
         let pickerRow = cell.pickerView.selectedRow(inComponent: 0)
         let indexPath = self.tableView.indexPathForRow(at: cell.center)!
+        print("This is the indexPath \(indexPath)")
+        if (indexPath.row == 2) {
+        let section = indexPath.section
+        OptionsController.viewsGraphTypes[section] = pickerRow
+        updateDashboard()
+        }
+        
         if (indexPath.row == 3) {
         let section = indexPath.section
         OptionsController.viewsColorsArray[section] = pickerRow
@@ -127,38 +134,38 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
     static var viewsArray: [Int] = [1,2,3,4]
     
     static var viewsColorsArray = [0,1,2,3]
+    
+    static var viewsGraphTypes = [0,0,0,0]
 
     var insertionIndexPath: IndexPath?
     
     
     func deleteRow(at _path: IndexPath) {
-        
-        tableView.deleteRows(at: [_path], with: .automatic)
+        tableView.deleteRows(at: [_path], with: .fade)
         insertionIndexPath = nil
+        
     }
     
     func addRow(at _path: IndexPath, withExtra: Bool) {
-        
         if withExtra {
             let row = _path.row + 1
             let section = _path.section
             let path = IndexPath(row: row, section: section)
-            tableView.insertRows(at: [path], with: .automatic)
+            tableView.insertRows(at: [path], with: .fade)
             insertionIndexPath = path
         }
         else {
            
-            tableView.insertRows(at: [_path], with: .automatic)
+            tableView.insertRows(at: [_path], with: .fade)
             insertionIndexPath = _path
         }
-        
     }
     
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-       
+       print(insertionIndexPath)
         
         if let path = insertionIndexPath {
             
@@ -276,6 +283,11 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
         return 50
     }
     
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         print("hello")
         
@@ -376,8 +388,6 @@ class OptionsController: UIViewController, UITableViewDelegate, UITableViewDataS
     var tagNumber = 1
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
         
         if let path = insertionIndexPath {
             

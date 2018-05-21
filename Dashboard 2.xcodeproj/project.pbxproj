@@ -14,6 +14,9 @@
 		AB0EDB5E20AC951500BC25C0 /* switchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0EDB5D20AC951500BC25C0 /* switchCell.swift */; };
 		AB161F1820ACE90800B53105 /* pickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB161F1720ACE90800B53105 /* pickerCell.swift */; };
 		AB161F1A20AE388B00B53105 /* actualPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB161F1920AE388B00B53105 /* actualPickerCell.swift */; };
+		AB6A558C20B26DA200F8B589 /* DevicesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A558B20B26DA200F8B589 /* DevicesController.swift */; };
+		AB6A559120B26FB700F8B589 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A559020B26FB700F8B589 /* DeviceView.swift */; };
+		AB6A559320B32B1100F8B589 /* DevicesController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A559220B32B1100F8B589 /* DevicesController2.swift */; };
 		ABBC772D20A5F73000825365 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC772C20A5F73000825365 /* AppDelegate.swift */; };
 		ABBC772F20A5F73000825365 /* dashBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC772E20A5F73000825365 /* dashBoardController.swift */; };
 		ABBC773220A5F73000825365 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABBC773020A5F73000825365 /* Main.storyboard */; };
@@ -36,6 +39,9 @@
 		AB0EDB5D20AC951500BC25C0 /* switchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = switchCell.swift; sourceTree = "<group>"; };
 		AB161F1720ACE90800B53105 /* pickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pickerCell.swift; sourceTree = "<group>"; };
 		AB161F1920AE388B00B53105 /* actualPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actualPickerCell.swift; sourceTree = "<group>"; };
+		AB6A558B20B26DA200F8B589 /* DevicesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesController.swift; sourceTree = "<group>"; };
+		AB6A559020B26FB700F8B589 /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
+		AB6A559220B32B1100F8B589 /* DevicesController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesController2.swift; sourceTree = "<group>"; };
 		ABBC772920A5F73000825365 /* Dashboard 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dashboard 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBC772C20A5F73000825365 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABBC772E20A5F73000825365 /* dashBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dashBoardController.swift; sourceTree = "<group>"; };
@@ -84,6 +90,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AB6A558E20B26E1800F8B589 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ABBC772E20A5F73000825365 /* dashBoardController.swift */,
+				AB0EDB5920ABDFEA00BC25C0 /* DashboardLayoutCreator.swift */,
+				ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */,
+				AB0EDB5B20AC90E600BC25C0 /* OptionsController.swift */,
+				AB6A558B20B26DA200F8B589 /* DevicesController.swift */,
+				AB6A559220B32B1100F8B589 /* DevicesController2.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		AB6A558F20B26E4400F8B589 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				AB0EDB5D20AC951500BC25C0 /* switchCell.swift */,
+				AB161F1720ACE90800B53105 /* pickerCell.swift */,
+				AB161F1920AE388B00B53105 /* actualPickerCell.swift */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
 		ABBC772020A5F73000825365 = {
 			isa = PBXGroup;
 			children = (
@@ -108,13 +137,9 @@
 				ABBC774320A5F84700825365 /* KDCircularProgress */,
 				ABBC772C20A5F73000825365 /* AppDelegate.swift */,
 				AB0EDB5720AB916B00BC25C0 /* DashboardControllerExtension.swift */,
-				ABBC772E20A5F73000825365 /* dashBoardController.swift */,
-				AB0EDB5920ABDFEA00BC25C0 /* DashboardLayoutCreator.swift */,
-				AB0EDB5B20AC90E600BC25C0 /* OptionsController.swift */,
-				AB0EDB5D20AC951500BC25C0 /* switchCell.swift */,
-				AB161F1720ACE90800B53105 /* pickerCell.swift */,
-				AB161F1920AE388B00B53105 /* actualPickerCell.swift */,
-				ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */,
+				AB6A558E20B26E1800F8B589 /* Controller */,
+				AB6A558F20B26E4400F8B589 /* CustomCells */,
+				AB6A559020B26FB700F8B589 /* DeviceView.swift */,
 				ABBC773E20A5F7D700825365 /* GraphView.swift */,
 				ABBC774B20A79D8B00825365 /* Extensions.swift */,
 				ABBC773020A5F73000825365 /* Main.storyboard */,
@@ -268,6 +293,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6A558C20B26DA200F8B589 /* DevicesController.swift in Sources */,
+				AB6A559120B26FB700F8B589 /* DeviceView.swift in Sources */,
 				AB0EDB5820AB916B00BC25C0 /* DashboardControllerExtension.swift in Sources */,
 				AB161F1820ACE90800B53105 /* pickerCell.swift in Sources */,
 				AB0EDB5C20AC90E700BC25C0 /* OptionsController.swift in Sources */,
@@ -275,6 +302,7 @@
 				ABBC774C20A79D8B00825365 /* Extensions.swift in Sources */,
 				ABBC774820A5F84700825365 /* KDCircularProgress.swift in Sources */,
 				ABBC772F20A5F73000825365 /* dashBoardController.swift in Sources */,
+				AB6A559320B32B1100F8B589 /* DevicesController2.swift in Sources */,
 				AB0EDB5A20ABDFEA00BC25C0 /* DashboardLayoutCreator.swift in Sources */,
 				AB161F1A20AE388B00B53105 /* actualPickerCell.swift in Sources */,
 				ABBC772D20A5F73000825365 /* AppDelegate.swift in Sources */,

@@ -19,7 +19,16 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         case purple
     }
     
+    enum graphType {
+        case cubicLineWithArea
+        case cubicLine
+        case linearLineWithArea
+        case linearLine
+        case bar
+        case step
+    }
     
+    var type: graphType = .cubicLineWithArea
     
     let chtChart: LineChartView = {
         let view = LineChartView()
@@ -28,6 +37,18 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         view.noDataFont = NSUIFont(name: "HelveticaNeue", size: 18.0)
         return view
     }()
+    
+    let barChart: BarChartView = {
+        let view = BarChartView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.noDataText = "Connect to sensor"
+        view.noDataFont = NSUIFont(name: "HelveticaNeue", size: 18.0)
+        return view
+    }()
+    
+    
+    
+    
     
     let topContainer: UIView = {
         let view = UIView()
@@ -52,7 +73,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
 //        verticalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
 //        verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
 //        pieChart.set(colors: colorWithHexString(hexString: "#fe117c"))
-//        var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         setupViews()
     }
     
@@ -178,7 +199,28 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         self.addSubview(bottomContainer)
         self.addSubview(horizontalProgressBar)
         
-        topContainer.addSubview(chtChart)
+        if self.type == .bar {
+            //chtChart.removeFromSuperview()
+            topContainer.addSubview(barChart)
+            barChart.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0).isActive = true
+            
+            barChart.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0).isActive = true
+            barChart.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0).isActive = true
+            barChart.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0).isActive = true
+            barChart.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
+        }
+        else {
+            //barChart.removeFromSuperview()
+              topContainer.addSubview(chtChart)
+            
+            chtChart.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0).isActive = true
+            
+            chtChart.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0).isActive = true
+            chtChart.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0).isActive = true
+            chtChart.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0).isActive = true
+            chtChart.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
+        }
+        
         //topContainer.addSubview(pieChart)
         bottomContainer.addSubview(pieChart)
         bottomContainer.addSubview(verticalProgressBar)
@@ -212,12 +254,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
          bottomContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         
         
-        chtChart.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0).isActive = true
-        
-        chtChart.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0).isActive = true
-        chtChart.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0).isActive = true
-        chtChart.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0).isActive = true
-        chtChart.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
+       
         
         
         pieChart.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0).isActive = true
@@ -262,7 +299,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     
     @objc func update(number: Double) {
         
-//        let number = Double(arc4random_uniform(5)) + Double(Float(arc4random()) / Float(UINT32_MAX)).rounded(toPlaces: 2)
+        let number = Double(arc4random_uniform(5)) + Double(Float(arc4random()) / Float(UINT32_MAX)).rounded(toPlaces: 2)
         
         if graphName == .voltage {
             titleLabel.text = "Voltage: \(number)"
@@ -273,7 +310,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
         }
         
         
-        let percentage = number/100
+        let percentage = number/5
         let angle = percentage * 360
         
         pieChart.animate(toAngle: angle, duration: 0.75, completion: nil)
@@ -291,6 +328,64 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     var firstTime = true
     
     func updateGraph() {
+        
+        
+        if self.type == .bar {
+            
+            var dataEntry: [BarChartDataEntry] = []
+            for i in 0..<times.count {
+                
+                let value = BarChartDataEntry(x: times[i], y: sensorValues[i])
+                
+                dataEntry.append(value)
+            }
+            
+            let chartDataSet = BarChartDataSet(values: dataEntry, label: "BPM")
+            let chartData = BarChartData()
+            
+            
+            chartData.addDataSet(chartDataSet)
+            chartData.setDrawValues(false)
+            
+            barChart.leftAxis.axisMaximum = 5.0
+            barChart.leftAxis.axisMinimum = 0
+            barChart.rightAxis.enabled = false
+            barChart.xAxis.drawGridLinesEnabled = false
+            barChart.xAxis.drawAxisLineEnabled = false
+            
+            // chtChart.xAxis.drawLabelsEnabled = false
+            //chtChart.leftAxis.drawGridLinesEnabled = false
+            //chtChart.leftAxis.drawLabelsEnabled = false
+            barChart.leftAxis.drawAxisLineEnabled = false
+            barChart.leftAxis.labelFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 24)!
+            barChart.xAxis.labelFont = UIFont(name: "AppleSDGothicNeo-Bold", size: 24)!
+            barChart.legend.enabled = false
+            barChart.chartDescription?.text = ""
+            
+            
+            chartDataSet.colors = [colorWithHexString(hexString: "#fe117c")]
+            //chtChart.setVisibleXRange(minXRange: 1, maxXRange: 4)
+            
+            barChart.data = chartData
+            
+            
+            
+            barChart.setVisibleXRange(minXRange: 0, maxXRange: 14)
+            if (times.count >= 14)
+            {
+                print("hello")
+                //chtChart.moveViewToX(totalXmoved)
+                barChart.moveViewToAnimated(xValue: totalXmoved, yValue: 2, axis: YAxis.AxisDependency.left, duration: 1)
+                totalXmoved = totalXmoved + 1.0
+            }
+            
+            
+            
+            
+            
+            
+        }
+        else {
         
         
         
@@ -333,26 +428,41 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
 //        chartDataSet.circleHoleColor = colorWithHexString(hexString: "#fe117c")
         
         
-        
-        
-        let colorLocations: [CGFloat] = [1.0, 0.0]
-        guard let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) else { print("gradient error"); return }
-        chartDataSet.fill = Fill.fillWithLinearGradient(gradient, angle: 90.0)
-        chartDataSet.drawFilledEnabled = true
-
-        
+            if (self.type == .cubicLine) || self.type == .linearLine{
+                chartDataSet.drawFilledEnabled = false
+                chartDataSet.drawCirclesEnabled = true
+                chartDataSet.circleRadius = 5
+            }
+            else {
+                let colorLocations: [CGFloat] = [1.0, 0.0]
+                guard let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) else { print("gradient error"); return }
+                chartDataSet.fill = Fill.fillWithLinearGradient(gradient, angle: 90.0)
+                chartDataSet.drawFilledEnabled = true
+                chartDataSet.drawCirclesEnabled = false
+            }
         
         chartData.addDataSet(chartDataSet)
         chartData.setDrawValues(false)
         
-        //#03C03C
-        chartDataSet.circleRadius = 0
-        //chartDataSet.circleHoleRadius = 3
-        //chartDataSet.circleHoleColor  = UIColor.white
         
-        chartDataSet.drawCirclesEnabled = true
+        
         chartDataSet.lineWidth = 2
-        chartDataSet.mode = .horizontalBezier
+            
+            
+
+            
+            if self.type == .step {
+                chartDataSet.mode = .stepped
+            }
+            else if (self.type == .cubicLine) ||  (self.type == .cubicLineWithArea)
+            {
+                chartDataSet.mode = .horizontalBezier
+            }
+            else
+            {
+                chartDataSet.mode = .linear
+            }
+        
 
         
         chtChart.leftAxis.axisMinimum = 0
@@ -385,7 +495,8 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
             
             totalXmoved += 1.0
         }
-        
+            
+        }
         
     }
     
