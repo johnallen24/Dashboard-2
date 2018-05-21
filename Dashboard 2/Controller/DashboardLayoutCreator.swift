@@ -55,14 +55,14 @@ extension dashBoardController {
             ])
         
         NSLayoutConstraint.activate([
-            topContainer.topAnchor.constraint(equalTo: overviewContainer.topAnchor, constant: 40),
+            topContainer.topAnchor.constraint(equalTo: overviewContainer.topAnchor, constant: 35),
             topContainer.leadingAnchor.constraint(equalTo: overviewContainer.leadingAnchor, constant: 20),
             topContainer.trailingAnchor.constraint(equalTo: overviewContainer.trailingAnchor, constant: -20),
             topContainer.heightAnchor.constraint(equalTo: overviewContainer.heightAnchor, multiplier: 0.5, constant: -60)
             ])
         
         NSLayoutConstraint.activate([
-            bottomContainer.topAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 40),
+            bottomContainer.topAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 45),
             bottomContainer.leadingAnchor.constraint(equalTo: overviewContainer.leadingAnchor, constant: 20),
             bottomContainer.trailingAnchor.constraint(equalTo: overviewContainer.trailingAnchor, constant: -20),
             bottomContainer.heightAnchor.constraint(equalTo: overviewContainer.heightAnchor, multiplier: 0.5, constant: -60)

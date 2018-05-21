@@ -14,19 +14,24 @@ class DeviceView: UIView {
     let nameLabel: UILabel = {
     let view = UILabel()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.text = "Connect"
+    view.textAlignment = .center
     view.font = UIFont.boldSystemFont(ofSize: 24)
     return view
     }()
     
     let phoneImageView: UIImageView = {
         let view = UIImageView()
+        view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let deviceInfoTextView: UITextView = {
     let view = UITextView()
+    view.textAlignment = .center
+    view.font = UIFont.boldSystemFont(ofSize: 20)//(name: "AppleSDGothicNeo-Medium ", size: 20)
+    view.isScrollEnabled = false
+    view.isEditable = false
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
     }()
@@ -44,6 +49,8 @@ class DeviceView: UIView {
         self.addSubview(nameLabel)
         self.addSubview(phoneImageView)
         self.addSubview(deviceInfoTextView)
+        
+     
 
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
@@ -59,7 +66,8 @@ class DeviceView: UIView {
             phoneImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7)
             ])
         
-        deviceInfoTextView.font = UIFont(name: "AppleSDGothicNeo-Medium ", size: 26)
+        deviceInfoTextView.contentInset = UIEdgeInsetsMake(-25,0.0,0,0.0);
+       
         NSLayoutConstraint.activate([
             deviceInfoTextView.topAnchor.constraint(equalTo: phoneImageView.bottomAnchor, constant: 0),
             deviceInfoTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),

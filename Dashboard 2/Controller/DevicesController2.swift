@@ -11,14 +11,25 @@ import MultipeerConnectivity
 
 extension DevicesController {
     
-    func setupConnectedDevices() {
-        let view = DeviceView()
-        view.nameLabel.text = deviceNames[numDevices - 1]
-        view.deviceInfoTextView.text = "Battery Level: \(batteryLevels[numDevices - 1])\nIs Connected: \(batteryStates[numDevices - 1])"
-        view.phoneImageView.image = UIImage(named: "Iphone 8")
-        deviceViews.append(view)
-        stackView.removeArrangedSubview(view1)
-        stackView.insertArrangedSubview(deviceViews[deviceViews.count - 1], at: 0)
+    func setupConnectedDevice() {
+//        let view = DeviceView()
+////        view.nameLabel.text = deviceNames[numDevices - 1]
+////        view.deviceInfoTextView.text = "Battery Level: \(batteryLevels[numDevices - 1])\nIs Connected: \(batteryStates[numDevices - 1])"
+////        view.phoneImageView.image = UIImage(named: "Iphone 8")
+//        deviceViews.append(view)
+//        switch peerIDS.count {
+//        case 1:
+//            stackView.removeArrangedSubview(view1)
+//        case 2:
+//            stackView.removeArrangedSubview(view2)
+//        case 3:
+//            stackView.removeArrangedSubview(view3)
+//        default:
+//            break
+//
+//        }
+        
+//        stackView.insertArrangedSubview(deviceViews[deviceViews.count - 1], at: peerIDS.count - 1)
     }
     
     func createDeviceView() -> UIView {
@@ -56,6 +67,7 @@ extension DevicesController {
         switch state {
         case MCSessionState.connected:
             peerIDS.append(peerID)
+            setupConnectedDevice()
             
         case MCSessionState.connecting:
             print("Connecting: \(peerID.displayName)")
@@ -74,63 +86,51 @@ extension DevicesController {
             var i = 0
             while i < self.peerIDS.count
             {
-                if let name = dictionary["name"] {
-                    print(name)
-                    self.deviceNames[i] = name
-                }
-                
-                if let level = dictionary["level"] {
-                    print(level)
-                    self.batteryLevels[i] = level
-                }
-                
-                if let batteryState = dictionary["batteryState"] {
-                    let num = Int(batteryState)
-                    if num == 1 {
-                        self.batteryStates[i] = "No"
+                if self.peerIDS[i] == peerID {
+                    
+                    if let name = dictionary["name"] {
+                        print(name)
+                        self.deviceNames[i] = name
                     }
-                    else if num == 2 || num == 3 {
-                        self.batteryStates[i] = "Yes"
+                    
+                    if let level = dictionary["level"] {
+                        print(level)
+                        self.batteryLevels[i] = level
                     }
-                    else {
-                        self.batteryStates[i] = "Unknown"
+                    
+                    if let batteryState = dictionary["batteryState"] {
+                        let num = Int(batteryState)
+                        if num == 1 {
+                            self.batteryStates[i] = "No"
+                        }
+                        else if num == 2 || num == 3 {
+                            self.batteryStates[i] = "Yes"
+                        }
+                        else {
+                            self.batteryStates[i] = "Unknown"
+                        }
+                        
                     }
                     
                 }
-                
-                
-                
+                i = i + 1
             }
-            
-            if let name = dictionary["name"] {
-                print(name)
-                self.deviceNames[self.numDevices - 1] = name
-            }
-            
-            if let level = dictionary["level"] {
-                print(level)
-                self.batteryLevels[self.numDevices - 1] = level
-            }
-            
-            if let batteryState = dictionary["batteryState"] {
-                let num = Int(batteryState)
-                if num == 1 {
-                    self.batteryStates[self.numDevices-1] = "No"
-                }
-                else if num == 2 || num == 3 {
-                    self.batteryStates[self.numDevices-1] = "Yes"
-                }
-                else {
-                    self.batteryStates[self.numDevices-1] = "Unknown"
-                }
-                
-            }
-            
-            
+            self.updateDevices()
         }
-        
     }
     
+    func updateDevices() {
+        
+        var i = 0
+        while i < peerIDS.count {
+            let view = stackView.arrangedSubviews[i] as! DeviceView
+            view.nameLabel.text = deviceNames[i]
+            view.deviceInfoTextView.text = "Battery Level: \(batteryLevels[i])%\nIs Charging: \(batteryStates[i])"
+            view.phoneImageView.image = UIImage(named: "Iphone 8")
+            i = i + 1
+        }
+       
+    }
     
     
     
@@ -149,7 +149,7 @@ extension DevicesController {
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
         
         if mcSession.connectedPeers.count > 0 {
-            setupConnectedDevices()
+            setupConnectedDevice()
         }
         dismiss(animated: true, completion: nil)
         

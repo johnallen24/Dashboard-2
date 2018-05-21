@@ -12,7 +12,7 @@ import MultipeerConnectivity
 class DevicesController: UIViewController, MCSessionDelegate, MCBrowserViewControllerDelegate  {
     
      var peerIDS: [MCPeerID] = []
-    var peerID: MCPeerID!
+    var selfPeerID: MCPeerID!
     //var peerIDS: 
     var mcSession: MCSession!
     var mcAdvertiserAssistant: MCAdvertiserAssistant!
@@ -28,9 +28,10 @@ class DevicesController: UIViewController, MCSessionDelegate, MCBrowserViewContr
         }
     }
     
-    let view1 = UIView()
-    let view2 = UIView()
-    let view3 = UIView()
+    let view1 = DeviceView()
+    let view2 = DeviceView()
+    let view3 = DeviceView()
+    let view4 = DeviceView()
     
     var deviceNames: [String] = ["", "", ""]
     var batteryLevels: [String] = ["", "", ""]
@@ -94,8 +95,8 @@ class DevicesController: UIViewController, MCSessionDelegate, MCBrowserViewContr
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = "Connect"
-         view.textAlignment = .left
-        view.font = UIFont(name: "AppleSDGothicNeo-Medium " , size: 20)
+        view.textAlignment = .left
+        view.font = UIFont(name: "AppleSDGothicNeo-Medium" , size: 24)
         return view
     }()
     
@@ -114,8 +115,8 @@ class DevicesController: UIViewController, MCSessionDelegate, MCBrowserViewContr
             [NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue])
         
         connectedLabel.attributedText = underlineAttriString
-        peerID = MCPeerID(displayName: UIDevice.current.name)
-        mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
+        selfPeerID = MCPeerID(displayName: UIDevice.current.name)
+        mcSession = MCSession(peer: selfPeerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
         
         
@@ -183,6 +184,8 @@ class DevicesController: UIViewController, MCSessionDelegate, MCBrowserViewContr
         stackView.addArrangedSubview(view1)
         stackView.addArrangedSubview(view2)
         stackView.addArrangedSubview(view3)
+        stackView.addArrangedSubview(view4)
+
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: connectedLabel.bottomAnchor, constant: 0),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),

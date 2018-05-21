@@ -73,7 +73,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
 //        verticalProgressBar.barFillColor = colorWithHexString(hexString: "#fe117c")
 //        verticalProgressBar.barBackgroundColor = colorWithHexString(hexString: "#fe117c").withAlphaComponent(0.2)
 //        pieChart.set(colors: colorWithHexString(hexString: "#fe117c"))
-        var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+//        var timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         setupViews()
     }
     
