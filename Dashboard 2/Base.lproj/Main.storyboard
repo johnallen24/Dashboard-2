@@ -43,10 +43,10 @@
             </objects>
             <point key="canvasLocation" x="-344" y="565"/>
         </scene>
-        <!--View Controller-->
+        <!--Dashboard Controller-->
         <scene sceneID="YKT-Gl-7xU">
             <objects>
-                <viewController id="o1V-Di-Huw" customClass="ViewController" customModule="Dashboard_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="o1V-Di-Huw" customClass="dashboardController" customModule="Dashboard_2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eoE-3S-Q2v">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,7 +95,7 @@
         <!--Graphs-->
         <scene sceneID="I4d-hO-zGz">
             <objects>
-                <viewController id="1DE-3R-x33" customClass="ViewController" customModule="Dashboard_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1DE-3R-x33" customClass="dashboardController" customModule="Dashboard_2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iV2-ba-FyK">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

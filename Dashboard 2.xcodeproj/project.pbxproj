@@ -17,9 +17,8 @@
 		AB6A558C20B26DA200F8B589 /* DevicesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A558B20B26DA200F8B589 /* DevicesController.swift */; };
 		AB6A559120B26FB700F8B589 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A559020B26FB700F8B589 /* DeviceView.swift */; };
 		AB6A559320B32B1100F8B589 /* DevicesController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A559220B32B1100F8B589 /* DevicesController2.swift */; };
-		AB6A559520B35DD000F8B589 /* DashboardController3.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A559420B35DD000F8B589 /* DashboardController3.swift */; };
 		ABBC772D20A5F73000825365 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC772C20A5F73000825365 /* AppDelegate.swift */; };
-		ABBC772F20A5F73000825365 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC772E20A5F73000825365 /* ViewController.swift */; };
+		ABBC772F20A5F73000825365 /* dashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBC772E20A5F73000825365 /* dashboardController.swift */; };
 		ABBC773220A5F73000825365 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABBC773020A5F73000825365 /* Main.storyboard */; };
 		ABBC773420A5F73000825365 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABBC773320A5F73000825365 /* Assets.xcassets */; };
 		ABBC773720A5F73000825365 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABBC773520A5F73000825365 /* LaunchScreen.storyboard */; };
@@ -43,10 +42,9 @@
 		AB6A558B20B26DA200F8B589 /* DevicesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesController.swift; sourceTree = "<group>"; };
 		AB6A559020B26FB700F8B589 /* DeviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
 		AB6A559220B32B1100F8B589 /* DevicesController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesController2.swift; sourceTree = "<group>"; };
-		AB6A559420B35DD000F8B589 /* DashboardController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController3.swift; sourceTree = "<group>"; };
 		ABBC772920A5F73000825365 /* Dashboard 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dashboard 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBC772C20A5F73000825365 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ABBC772E20A5F73000825365 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ABBC772E20A5F73000825365 /* dashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dashboardController.swift; sourceTree = "<group>"; };
 		ABBC773120A5F73000825365 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ABBC773320A5F73000825365 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABBC773620A5F73000825365 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -95,7 +93,7 @@
 		AB6A558E20B26E1800F8B589 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				ABBC772E20A5F73000825365 /* ViewController.swift */,
+				ABBC772E20A5F73000825365 /* dashboardController.swift */,
 				AB0EDB5920ABDFEA00BC25C0 /* DashboardLayoutCreator.swift */,
 				ABBC774D20A9DAAF00825365 /* SurfaceCoilController.swift */,
 				AB0EDB5B20AC90E600BC25C0 /* OptionsController.swift */,
@@ -139,7 +137,6 @@
 				ABBC774320A5F84700825365 /* KDCircularProgress */,
 				ABBC772C20A5F73000825365 /* AppDelegate.swift */,
 				AB0EDB5720AB916B00BC25C0 /* DashboardControllerExtension.swift */,
-				AB6A559420B35DD000F8B589 /* DashboardController3.swift */,
 				AB6A558E20B26E1800F8B589 /* Controller */,
 				AB6A558F20B26E4400F8B589 /* CustomCells */,
 				AB6A559020B26FB700F8B589 /* DeviceView.swift */,
@@ -243,12 +240,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Dashboard 2/Pods-Dashboard 2-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AZDropdownMenu/AZDropdownMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/DropDownMenuKit/DropDownMenuKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTProgressBar/GTProgressBar.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AZDropdownMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDownMenuKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTProgressBar.framework",
@@ -302,12 +301,11 @@
 				AB6A559120B26FB700F8B589 /* DeviceView.swift in Sources */,
 				AB0EDB5820AB916B00BC25C0 /* DashboardControllerExtension.swift in Sources */,
 				AB161F1820ACE90800B53105 /* pickerCell.swift in Sources */,
-				AB6A559520B35DD000F8B589 /* DashboardController3.swift in Sources */,
 				AB0EDB5C20AC90E700BC25C0 /* OptionsController.swift in Sources */,
 				ABBC774E20A9DAB100825365 /* SurfaceCoilController.swift in Sources */,
 				ABBC774C20A79D8B00825365 /* Extensions.swift in Sources */,
 				ABBC774820A5F84700825365 /* KDCircularProgress.swift in Sources */,
-				ABBC772F20A5F73000825365 /* ViewController.swift in Sources */,
+				ABBC772F20A5F73000825365 /* dashboardController.swift in Sources */,
 				AB6A559320B32B1100F8B589 /* DevicesController2.swift in Sources */,
 				AB0EDB5A20ABDFEA00BC25C0 /* DashboardLayoutCreator.swift in Sources */,
 				AB161F1A20AE388B00B53105 /* actualPickerCell.swift in Sources */,

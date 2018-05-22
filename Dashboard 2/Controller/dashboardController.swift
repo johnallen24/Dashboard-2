@@ -8,13 +8,12 @@
 
 import UIKit
 import MultipeerConnectivity
-import DropDownMenuKit
+import AZDropdownMenu
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate, DropDownMenuDelegate {
+class dashboardController: UIViewController, UIGestureRecognizerDelegate {
     
-    var titleView: DropDownTitleView!
-    @IBOutlet var navigationBarMenu: DropDownMenu!
-    @IBOutlet var toolbarMenu: DropDownMenu!
+    let titles = ["Action 1", "Action 2", "Action 3"]
+    var menu: AZDropdownMenu!
     
     
     var peerID: MCPeerID!

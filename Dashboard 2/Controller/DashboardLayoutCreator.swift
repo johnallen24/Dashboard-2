@@ -7,28 +7,30 @@
 //
 
 import UIKit
+import AZDropdownMenu
 
-extension ViewController {
+extension dashboardController {
     
     
     
     
     
-    
+    @objc func showDropdown() {
+        if (self.menu?.isDescendant(of: self.view) == true) {
+            self.menu?.hideMenu()
+        } else {
+            self.menu?.showMenuFromView(self.view)
+        }
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //self.navigationController?.title = "hey"
-        let title = prepareNavigationBarMenuTitleView()
-        
-        print(title)
-        prepareNavigationBarMenu(title)
-        prepareToolbarMenu()
-        
-        navigationBarMenu.container = view
-        toolbarMenu.container = view
+        menu = AZDropdownMenu(titles: titles)
+        navigationController?.navigationBar.topItem?.title = "hey"
+        let button = UIBarButtonItem(image: UIImage(named: "tablesquare"), style: .plain, target: self, action: #selector(showDropdown))
+        navigationItem.leftBarButtonItem = button
+       
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateDashboard), name: Notification.Name(rawValue: "updateDashboard"), object: nil)
@@ -142,7 +144,7 @@ extension ViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        view.bringSubview(toFront: titleView)
+    
         updateDashboard(notification: nil)
 //        graphView1.frame = overviewContainer.frame
 //        graphView2.frame = topLeftContainer.frame
@@ -244,7 +246,7 @@ extension ViewController {
             print("error")
         }
         
-        view.bringSubview(toFront: titleView)
+        
     }
     
     @objc func goToFullScreen(_ gesture: UIGestureRecognizer) {
