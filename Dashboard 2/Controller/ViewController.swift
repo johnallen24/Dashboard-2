@@ -8,8 +8,14 @@
 
 import UIKit
 import MultipeerConnectivity
+import DropDownMenuKit
 
-class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
+class ViewController: UIViewController, UIGestureRecognizerDelegate, DropDownMenuDelegate {
+    
+    var titleView: DropDownTitleView!
+    @IBOutlet var navigationBarMenu: DropDownMenu!
+    @IBOutlet var toolbarMenu: DropDownMenu!
+    
     
     var peerID: MCPeerID!
     var mcSession: MCSession!
@@ -19,9 +25,9 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
     
     var graphTypesDecoder: [GraphView.graphType] = [.cubicLineWithArea, .cubicLine, .linearLineWithArea, .linearLine, .bar, .step]
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
+//    override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
     
     var viewCenter: CGPoint {
         get {
@@ -158,6 +164,24 @@ class dashBoardController: UIViewController, UIGestureRecognizerDelegate{
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    let menuView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.blue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
+    let dropDownButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Devices", for: .normal)
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.textColor = UIColor.black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(dropMenu), for: .touchUpInside)
+        return button
     }()
     
     let phoneConnectButton: UIButton = {

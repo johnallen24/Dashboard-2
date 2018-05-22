@@ -9,7 +9,7 @@
 import UIKit
 import MultipeerConnectivity
 
-extension dashBoardController: MCSessionDelegate, MCBrowserViewControllerDelegate {
+extension ViewController: MCSessionDelegate, MCBrowserViewControllerDelegate {
     
    
     

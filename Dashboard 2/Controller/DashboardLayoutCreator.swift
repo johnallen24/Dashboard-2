@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension dashBoardController {
+extension ViewController {
     
     
     
@@ -19,8 +19,20 @@ extension dashBoardController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //self.navigationController?.title = "hey"
+        let title = prepareNavigationBarMenuTitleView()
+        
+        print(title)
+        prepareNavigationBarMenu(title)
+        prepareToolbarMenu()
+        
+        navigationBarMenu.container = view
+        toolbarMenu.container = view
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(updateDashboard), name: Notification.Name(rawValue: "updateDashboard"), object: nil)
-       
+
         view.addSubview(overviewContainer)
         view.addSubview(singleContainer)
         view.addSubview(topContainer)
@@ -29,88 +41,108 @@ extension dashBoardController {
         view.addSubview(topLeftContainer)
         view.addSubview(bottomLeftContainer)
         view.addSubview(bottomRightContainer)
-        
+        view.addSubview(dropDownButton)
+
           view.addSubview(graphView1)
           view.addSubview(graphView2)
           view.addSubview(graphView3)
           view.addSubview(graphView4)
-    
+        
+        
+
         overviewContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         singleContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         topContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         bottomContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
-        
+
         NSLayoutConstraint.activate([
-            overviewContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            overviewContainer.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0),
             overviewContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             overviewContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             overviewContainer.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: 0)
             ])
-        
+
         NSLayoutConstraint.activate([
             singleContainer.topAnchor.constraint(equalTo: overviewContainer.topAnchor, constant: 40),
             singleContainer.leadingAnchor.constraint(equalTo: overviewContainer.leadingAnchor, constant: 20),
             singleContainer.trailingAnchor.constraint(equalTo: overviewContainer.trailingAnchor, constant: -20),
             singleContainer.bottomAnchor.constraint(equalTo: overviewContainer.bottomAnchor, constant: -40)
             ])
-        
+
         NSLayoutConstraint.activate([
-            topContainer.topAnchor.constraint(equalTo: overviewContainer.topAnchor, constant: 35),
-            topContainer.leadingAnchor.constraint(equalTo: overviewContainer.leadingAnchor, constant: 20),
-            topContainer.trailingAnchor.constraint(equalTo: overviewContainer.trailingAnchor, constant: -20),
-            topContainer.heightAnchor.constraint(equalTo: overviewContainer.heightAnchor, multiplier: 0.5, constant: -60)
+            dropDownButton.topAnchor.constraint(equalTo: overviewContainer.topAnchor, constant: 0),
+            dropDownButton.leadingAnchor.constraint(equalTo: overviewContainer.leadingAnchor, constant: 20),
+            dropDownButton.widthAnchor.constraint(equalToConstant: 100),
+            dropDownButton.bottomAnchor.constraint(equalTo: singleContainer.topAnchor, constant: 0)
             ])
-        
+
+
         NSLayoutConstraint.activate([
-            bottomContainer.topAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 45),
-            bottomContainer.leadingAnchor.constraint(equalTo: overviewContainer.leadingAnchor, constant: 20),
-            bottomContainer.trailingAnchor.constraint(equalTo: overviewContainer.trailingAnchor, constant: -20),
-            bottomContainer.heightAnchor.constraint(equalTo: overviewContainer.heightAnchor, multiplier: 0.5, constant: -60)
+            topContainer.topAnchor.constraint(equalTo: singleContainer.topAnchor, constant: 0),
+            topContainer.leadingAnchor.constraint(equalTo: singleContainer.leadingAnchor, constant: 0),
+            topContainer.trailingAnchor.constraint(equalTo: singleContainer.trailingAnchor, constant: 0),
+            topContainer.heightAnchor.constraint(equalTo: singleContainer.heightAnchor, multiplier: 0.5, constant: -20)
             ])
-        
-        
+
+        NSLayoutConstraint.activate([
+            bottomContainer.bottomAnchor.constraint(equalTo: singleContainer.bottomAnchor, constant: 0),
+            bottomContainer.leadingAnchor.constraint(equalTo: singleContainer.leadingAnchor, constant: 0),
+            bottomContainer.trailingAnchor.constraint(equalTo: singleContainer.trailingAnchor, constant: 0),
+            bottomContainer.heightAnchor.constraint(equalTo: singleContainer.heightAnchor, multiplier: 0.5, constant: -20)
+            ])
+
         NSLayoutConstraint.activate([
             topRightContainer.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0),
             topRightContainer.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0),
             topRightContainer.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 0),
             topRightContainer.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5, constant: -10)
             ])
-        
+
         NSLayoutConstraint.activate([
             topLeftContainer.topAnchor.constraint(equalTo: topContainer.topAnchor, constant: 0),
             topLeftContainer.bottomAnchor.constraint(equalTo: topContainer.bottomAnchor, constant: 0),
             topLeftContainer.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: 0),
             topLeftContainer.widthAnchor.constraint(equalTo: topContainer.widthAnchor, multiplier: 0.5, constant: -10)
             ])
-        
+
         NSLayoutConstraint.activate([
             bottomRightContainer.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0),
             bottomRightContainer.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0),
             bottomRightContainer.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 0),
             bottomRightContainer.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5, constant: -10)
             ])
-        
+
         NSLayoutConstraint.activate([
             bottomLeftContainer.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: 0),
             bottomLeftContainer.bottomAnchor.constraint(equalTo: bottomContainer.bottomAnchor, constant: 0),
             bottomLeftContainer.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: 0),
             bottomLeftContainer.widthAnchor.constraint(equalTo: bottomContainer.widthAnchor, multiplier: 0.5, constant: -10)
             ])
-        
-        
+
+//        view.addSubview(menuView)
+//        NSLayoutConstraint.activate([
+//            menuView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+//            menuView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+//            menuView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+//            menuView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+//            ])
+//
+//        menuView.isHidden = true
+
         topRightContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         bottomLeftContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         bottomRightContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
         topLeftContainer.backgroundColor = colorWithHexString(hexString: "#eaf3f9")
-        
-        
-       
+
+
+
         NotificationCenter.default.addObserver(self, selector: #selector(rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-        
+
         
     }
     
     override func viewDidLayoutSubviews() {
+        view.bringSubview(toFront: titleView)
         updateDashboard(notification: nil)
 //        graphView1.frame = overviewContainer.frame
 //        graphView2.frame = topLeftContainer.frame
@@ -212,7 +244,7 @@ extension dashBoardController {
             print("error")
         }
         
-        
+        view.bringSubview(toFront: titleView)
     }
     
     @objc func goToFullScreen(_ gesture: UIGestureRecognizer) {
@@ -240,6 +272,24 @@ extension dashBoardController {
         
     }
     
+    @objc func dropMenu() {
+        
+//        view.addSubview(menuView)
+//        NSLayoutConstraint.activate([
+//            menuView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+//            menuView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+//            menuView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+//            menuView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+//            ])
+//
+//        view.bringSubview(toFront: menuView)
+//
+//        UIView.animate(withDuration: 0.4, animations: {
+//            self.menuView.isHidden = false
+//            self.view.bringSubview(toFront: self.dropDownButton)
+//            self.view.layoutIfNeeded()})
+        
+    }
     
     
     
